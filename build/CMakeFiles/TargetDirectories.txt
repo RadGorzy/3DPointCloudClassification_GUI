@@ -1,0 +1,3 @@
+/home/radek/Documents/Qt5/3DPointCloudClassification_GUI/build/CMakeFiles/rebuild_cache.dir
+/home/radek/Documents/Qt5/3DPointCloudClassification_GUI/build/CMakeFiles/3DPointCloudClassification_GUI.dir
+/home/radek/Documents/Qt5/3DPointCloudClassification_GUI/build/CMakeFiles/edit_cache.dir
