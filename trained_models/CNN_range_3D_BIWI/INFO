@@ -1,0 +1,4 @@
+CNN_range_3D_BIWI
+person - ½ – person3D (11790 train, 4068 test)
+	½- range_images z BIWI RGBD-ID dataset (11790 w train  pierwszych zdjec sortowanie po nazwie \|/ ;w test 2034 od dolu i 2034 od gory (sortowanie jak w train))
+pozostale klasy jak w CNN_range_3D

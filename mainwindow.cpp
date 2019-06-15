@@ -95,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //config->addWidget(this->ui->scale1_doubleSpinBox);
     config->addAllWidgetsOfGivenTypes({SpinBox,DoubleSpinBox,CheckBox,ComboBox,LineEdit,GroupBox});
     //# ponizsza linijka tylko do TESTOW, potem do USUNIECIA
-    this->config->loadConfiguration("/home/radek/Documents/Qt5/data/configuration/CNN_binary_Map_person_edited_3x3_KITTI.txt");
+    this->config->loadConfiguration("../configurations/CNN_binary_Map_person_edited_3x3_KITTI.txt");
 }
 
 MainWindow::~MainWindow()

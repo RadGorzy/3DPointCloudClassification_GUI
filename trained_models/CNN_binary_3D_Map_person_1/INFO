@@ -1,0 +1,6 @@
+obecna struktura:
+
+building - same rzuty (bez zdjec z innych zbiorow) przy czym polowa to sa rzuty pelnych obiektow, a polowa to rzuty budynkow przycietych (crop) do wysokosc 1.2 m (tzn. pozostawiono tylko 1.2m budynku od podloza)
+Zabieg taki zastosowano, zeby zwiekszyc dokladnosc rozpoznawania budynkow w scenach KITTI (tam jest tylko dol budynkow)
+
+pozostale klasy jak w CNN_binary_3D_Map_person
