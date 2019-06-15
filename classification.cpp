@@ -156,8 +156,8 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
     //dodanie do PYTHONPATH - zaradzenie problemowi no module names ... found (https://stackoverflow.com/questions/24492327/python-embedding-in-c-importerror-no-module-named-pyfunction)
     PyRun_SimpleString("import sys");
     PyRun_SimpleString("sys.path.append(\".\")");//czyli wymagamy aby plik pythona byl w folderze w ktorym jest .exe cpp     //PyRun_SimpleString("sys.path.append(\"<some_path>\")");
-    PyRun_SimpleString("sys.path.append(\"/home/radek/DeepLearning/CNN_binary\")");
-
+    PyRun_SimpleString("sys.path.append(\"../embedded_python\")");// embedded modules must be one folder up from executon file
+    //# UWAGA-> moze podawac sciezke do embedded modules jako parametr ?
     pName = PyUnicode_FromString(python_file.c_str());
     //Error checking of pName left out //
     pModule = PyImport_Import(pName);
