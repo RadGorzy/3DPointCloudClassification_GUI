@@ -30,7 +30,7 @@ std::vector<float> MultiViewClassification::listTupleToVector_Float(PyObject* in
     return data;
 }
 int MultiViewClassification::classify(const std::vector<cv::Mat> &projection_vector, const std::string modelDirectory,int numOfClasses) {
-    std::string python_file="TestowanieModelu_v1";
+    std::string python_file="ModelTesting";
     std::string python_func="classify_multiple_projections";//"testing";
 
     PyObject *pName, *pModule, *pDict, *pFunc;
@@ -140,7 +140,7 @@ int MultiViewClassification::classify(const std::vector<cv::Mat> &projection_vec
  *
  */
 std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const std::vector<cv::Mat>& projection_vector, const std::string modelDirectory, int numOfClasses){
-    std::string python_file="TestowanieModelu_v1";
+    std::string python_file="ModelTesting";
     std::string python_func="classify_multiple_projections_and_get_response_vector";//"testing";
 
     PyObject *pName, *pModule, *pDict, *pFunc;
