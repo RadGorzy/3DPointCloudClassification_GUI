@@ -23,7 +23,8 @@ Code is written in a way that allows easy extension of functionality.
 
 ### Dependency:
 	Tested with PCL 1.9,tensorflow-gpu 1.12.0, Qt 5.12 and VTK-8.2.0 under ubuntu 18.04
-	to build:
+	
+to build:
 ```
 mkdir build && cd build && cmake .. && make
 ```
