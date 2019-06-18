@@ -32,6 +32,8 @@ mkdir build && cd build && cmake .. && make
 ![Alt text](screenshots/3DPointCloudClassification_screenshot.png "Optional Title")
 ![Alt text](screenshots/3DPointCloudClassification_screenshot_1.png "Optional Title")
 ![Alt text](screenshots/3DPointCloudClassification_screenshot_2.png "Optional Title")
+![Alt text](classification_result_IQ&T.png "Classification result IQmulus & TerraMobilita dataset")
+![Alt text](classification_result_IQ&T_1.png "Classification result IQmulus & TerraMobilita dataset")
 
 
 [1] Technology, Karlsruhe Institute of, „The KITTI Vision Benchmark Suite,” [Online].
