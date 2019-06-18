@@ -30,7 +30,8 @@ mkdir build && cd build && cmake .. && make
 ```
 	
 ![Alt text](screenshots/3DPointCloudClassification_screenshot.png "Optional Title")
-
+![Alt text](screenshots/3DPointCloudClassification_screenshot_1.png "Optional Title")
+![Alt text](screenshots/3DPointCloudClassification_screenshot_2.png "Optional Title")
 
 
 [1] Technology, Karlsruhe Institute of, „The KITTI Vision Benchmark Suite,” [Online].
