@@ -1,7 +1,5 @@
 import tensorflow as tf
-import scipy
 import numpy
-from scipy.misc import imsave
 
 print("IM IN PYTHON ................")
 #dla rozwiazania porblemu https://github.com/google/oauth2client/issues/642
@@ -84,6 +82,7 @@ def classify_multiple_projections(test,modelDirectory,number_of_classes): #clasi
 
     tf.reset_default_graph()
     return numpy.argmax(max_sum)
+
 def classify_multiple_projections_and_get_response_vector(test,modelDirectory,number_of_classes): #clasify single object based on its multiple projections
     print("USING {} MODEL ".format(modelDirectory))
 
@@ -129,33 +128,9 @@ def classify_multiple_projections_and_get_response_vector(test,modelDirectory,nu
     result.insert(0,numpy.argmax(max_sum))
 
     return tuple(result)
-def testing(test):
-    print("image.shape=")
-    print(test)
+
 
 def main(unused_argv):
-    # Wczytanie zdjecia, ktore chcemy sklasyfikowac
 
-    vec=[]
-    test = scipy.ndimage.imread("./testing/[b'building_CasV_1_h00_p039.jpg']_[[0. 1. 0. 0. 0.]]test.jpg",flatten=1)  # z tych przykladowych to zle klasyfikuje 92.png, pozostale ok - wyglada na to, model jest dobrze wytrenowany
-    #test1 = scipy.ndimage.imread("./testing/Building_Finnmarken91_0_h00_p081.jpg", flatten=1)
-    #test2 = scipy.ndimage.imread("./testing/person_0042_h00_p012.jpg", flatten=1)
-    vec.append(test)
-    #vec.append(test1)
-    #vec.append(test2)
-    #testing(test1)
-
-    #print(classify_multiple_projections(vec))
-    print(classify_multiple_projections_and_get_response_vector(vec,"/home/radek/Documents/Qt5/data/zapisane/CNN_binary_3D_Map_person_1",5))
-
-    #for image in vec:
-     #   result=classify(image)
-      #  print(result)
-
-
-    """
-    test = scipy.ndimage.imread("./testing/0000002_0005817_0000004_0001082_4_bb1_e.jpg", flatten=1)
-    classify(test)
-    """
 if __name__ == '__main__':
     tf.app.run()
