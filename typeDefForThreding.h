@@ -9,7 +9,7 @@
  * https://doc.qt.io/qt-5/qmetatype.html#Q_DECLARE_METATYPE
 **/
 
-#include <boost/exception/detail/shared_ptr.hpp>
+#include <memory>
 #include <QMetaType>
 class PointCloudController;
 class QTreeWidgetItem;

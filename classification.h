@@ -22,13 +22,11 @@ static void *init_ar() {
 
 class ClassificationType{
 public:
-    virtual int classify(const std::vector<cv::Mat>& projection_vector,const std::string modelDir, int numOfClasses)=0;
     virtual std::vector<float> classifyAndGetNNResponeVector(const std::vector<cv::Mat>& projection_vector, const std::string modelDirectory, int numOfClasses)=0;
 };
 class MultiViewClassification:public ClassificationType{
 public:
    std::vector<float> listTupleToVector_Float(PyObject* incoming);
-   int classify(const std::vector<cv::Mat>& projection_vector, const std::string modelDirectory, int numOfClasses);
    std::vector<float> classifyAndGetNNResponeVector(const std::vector<cv::Mat>& projection_vector, const std::string modelDirectory, int numOfClasses);
 };
 
