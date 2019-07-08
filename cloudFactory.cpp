@@ -16,7 +16,7 @@ void loadPointCloud(std::string FILEPATH,pcl::PointCloud<pcl::PointXYZ>::Ptr &cl
         std::fstream input(FILEPATH.c_str(), std::ios::in | std::ios::binary); //read (ios::in) file "FILEPATH" in binary mode (ios::binary) -> for more info check fstream initializetion constructor parameters
         if(!input.good()){
             std::cout << "Could not read file: " << FILEPATH << std::endl;
-            std::exit(EXIT_FAILURE);
+            //std::exit(EXIT_FAILURE);
         }
         input.seekg(0, std::ios::beg);
 
@@ -36,7 +36,7 @@ void loadPointCloud(std::string FILEPATH,pcl::PointCloud<pcl::PointXYZ>::Ptr &cl
         pcl::io::loadPCDFile (FILEPATH.c_str(), blob);
         pcl::fromPCLPointCloud2 (blob, *cloud);
     } else
-        throw std::runtime_error ("Could not read file - wrong expression (only .pcd and .bin supported");
+        std::cout<<"Could not read file - wrong expression (only .pcd and .bin supported"<<std::endl;
 
 }
 /*
