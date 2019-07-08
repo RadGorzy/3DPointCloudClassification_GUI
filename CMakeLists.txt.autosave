@@ -18,7 +18,6 @@ find_package( OpenCV REQUIRED )
 
 find_package( PythonInterp 3.5 REQUIRED )
 find_package( PythonLibs 3.5 REQUIRED )
-#find_package(PythonLibs REQUIRED)
 
 #for python embedding:
 find_package( Boost COMPONENTS python REQUIRED )
