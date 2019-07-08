@@ -8,7 +8,7 @@
 
 #include <string>
 #include <vector>
-#include <boost/exception/detail/shared_ptr.hpp>
+#include <memory>
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 #include <opencv2/opencv.hpp>
