@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 # find Qt5 and required components
 #set(Qt5_DIR "/home/radek/Qt/5.12.1/gcc_64/lib/cmake/Qt5")
 #set( QT_ROOT "/home/radek/Qt/5.12.1/" )
-SET(CMAKE_PREFIX_PATH "/home/radek/Qt/5.12.1/gcc_64/lib/cmake/Qt5")
+SET(CMAKE_PREFIX_PATH "/home/radekvm/Qt/5.12.2/gcc_64/lib/cmake")
 
 #set( ENV(CMAKE_PREFIX_PATH) ${QT_ROOT} )
 find_package(Qt5 COMPONENTS REQUIRED Core Gui Widgets OpenGL)
@@ -14,7 +14,7 @@ find_package(Qt5 COMPONENTS REQUIRED Core Gui Widgets OpenGL)
 # file from the qt5_wrap_ui call below.
 #set(VTK_DIR "/home/radek/VTK/VTK-7.1.1-Release-qt5.2.1-build")
 #set(VTK_DIR "/home/radek/VTK/VTK-8.0.1-qt5.12.1-build")
-set(VTK_DIR "/home/radek/VTK/VTK-8.2.0-qt5.12.1-build")
+set(VTK_DIR "/home/radekvm/VTK/VTK-8.2.0-qt5-build")
 #SET(VTK_DIR "/home/radek/VTK/VTK-8.2.0-qt5.12.1-build" CACHE PATH "VTK directory override" FORCE)
 #set(VTK_DIR "/home/radek/VTK/VTK-7.1.1-qt5.12.1-build")
 find_package(VTK REQUIRED)
@@ -24,10 +24,10 @@ include(${VTK_USE_FILE})
 find_package(PCL 1.9 REQUIRED)
 find_package( OpenCV REQUIRED )
 
-#find_package( PythonInterp 3.6 REQUIRED )
-#find_package( PythonLibs 3.6 REQUIRED )
-SET(PYTHON_INCLUDE_DIR "/home/radek/venv/include/python3.6m")
-SET(PYTHON_LIBRARY "/usr/lib/x86_64-linux-gnu/libpython3.6m.so")
+find_package( PythonInterp 3.5 REQUIRED )
+find_package( PythonLibs 3.5 REQUIRED )
+##SET(PYTHON_INCLUDE_DIR "/home/radekvm/venv/include/python3.6m")
+##SET(PYTHON_LIBRARY "/usr/lib/x86_64-linux-gnu/libpython3.6m.so")
 find_package(PythonLibs REQUIRED)
 
 #for python embedding:
