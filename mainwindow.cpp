@@ -79,9 +79,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeWidget->insertTopLevelItem(1, item);
     item->addChild(child);
 */
-    QTreeWidgetItem * item = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("/home/radek/Documents/zrodlaChmur/single_objects/podzbior_do_CNN_binary_3D/car/IGN_Z0_car_1.pcd")));
-    QTreeWidgetItem * item1 = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("/home/radek/CLionProjects/3DPointCloudClassification/data/0000000003.pcd")));
-    QTreeWidgetItem * item2 = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("/home/radek/CLionProjects/3DPointCloudClassification/data/scenes/000023.bin")));
+    QTreeWidgetItem * item = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("../example_scenes/IGN_Z0_car_1.pcd")));
+    QTreeWidgetItem * item1 = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("../example_scenes/0000000003.pcd")));
+    QTreeWidgetItem * item2 = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("../example_scenes/000023.bin")));
     item->setText(1,"object");
     item1->setText(1,"scene");
     item2->setText(1,"scene");
