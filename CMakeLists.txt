@@ -4,12 +4,11 @@ project(3DPointCloudClassification_GUI)
 set(CMAKE_CXX_STANDARD 14)
 
 # find Qt5 and required components
-SET(CMAKE_PREFIX_PATH "/home/radekvm/Qt/5.12.2/gcc_64/lib/cmake")
-#set( ENV(CMAKE_PREFIX_PATH) ${QT_ROOT} )
 find_package(Qt5 COMPONENTS REQUIRED Core Gui Widgets OpenGL)
 # need this to include the auto generated ui_mainwindow.h
 # file from the qt5_wrap_ui call below.
-set(VTK_DIR "/home/radekvm/VTK/VTK-8.2.0-qt5-build")
+#if you didnt 'make install' vtk -> show path to your vtk build below, for ex.:
+#set(VTK_DIR "/home/user/VTK/VTK-8.2.0-qt5-build")
 find_package(VTK REQUIRED)
 include(${VTK_USE_FILE})
 
@@ -18,7 +17,6 @@ find_package( OpenCV REQUIRED )
 
 find_package( PythonInterp 3.5 REQUIRED )
 find_package( PythonLibs 3.5 REQUIRED )
-#find_package(PythonLibs REQUIRED)
 
 #for python embedding:
 find_package( Boost COMPONENTS python REQUIRED )
