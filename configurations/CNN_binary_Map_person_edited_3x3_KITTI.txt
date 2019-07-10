@@ -73,7 +73,7 @@ qt_spinbox_lineedit 0,00
 qt_spinbox_lineedit 350,00
 qt_spinbox_lineedit 0,00
 qt_spinbox_lineedit 0,00
-classificationModel_lineEdit /home/radek/Documents/Qt5/3DPointCloudClassification_GUI/trained_models/CNN_binary_3D_Map_person_1
+classificationModel_lineEdit ../trained_models/CNN_binary_3D_Map_person_1
 qt_spinbox_lineedit 5
 benchmarkSaveFolder_lineEdit /home/radek/Documents/Qt5/data/benchmark
 selectClassMapping_lineEdit /home/radek/Documents/Qt5/data/benchmark/class_mapping
