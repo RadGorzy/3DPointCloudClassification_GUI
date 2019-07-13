@@ -2,7 +2,7 @@
 // Created by radek on 21.03.19.
 //
 #include "benchmarkAndVisualize.h"
-#include "helperFunctions.h"
+#include "lib/helperFunctions.h"
 bool PRINT_LABEL=false;
 
 BoundingBoxType::BoundingBoxType(BBType type):bbType(type){}
