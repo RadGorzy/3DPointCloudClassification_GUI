@@ -5,7 +5,7 @@
 #ifndef INC_3DPOINTCLOUDCLASSIFICATION_CLASSIFICATION_H
 #define INC_3DPOINTCLOUDCLASSIFICATION_CLASSIFICATION_H
 
-#include "pyboostcvconverter/pyboostcvconverter.hpp"
+#include "lib/pyboostcvconverter/pyboostcvconverter.hpp"
 
 //For python embedding:
 #if (PY_VERSION_HEX >= 0x03000000)

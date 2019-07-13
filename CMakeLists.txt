@@ -38,6 +38,7 @@ include_directories( ${Boost_INCLUDE_DIR})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 #####################################################################
+#[[
 set(project_sources mainwindow.cpp main.cpp  pointCloud.cpp  projection.cpp  segmentation.cpp  cloudFactory.cpp   pyboostcvconverter/pyboost_cv3_converter.cpp classification.cpp benchmarkAndVisualize.cpp edit.cpp prepareDataset.cpp
     pointCloudController.cpp threadController.cpp prepareDatasetController.cpp
     configuration.cpp saveLoad.cpp
@@ -47,6 +48,25 @@ set(project_headers mainwindow.h pointCloud.h projection.h segmentation.h cloudF
     configuration.h saveLoad.h
     saveSettings.h)
 set(project_ui mainwindow.ui saveSettings.ui)
+]]
+file(GLOB project_sources
+    "${PROJECT_SOURCE_DIR}/src/core/*.cpp"
+    "${PROJECT_SOURCE_DIR}/src/controller/*.cpp"
+    "${PROJECT_SOURCE_DIR}/src/view/*.cpp"
+    "${PROJECT_SOURCE_DIR}/lib/pyboostcvconverter/*.cpp"
+    "${PROJECT_SOURCE_DIR}/lib/*.cpp"
+    )
+file(GLOB project_headers
+            "${PROJECT_SOURCE_DIR}/src/core/*.h"
+            "${PROJECT_SOURCE_DIR}/src/controler/*.h"
+            "${PROJECT_SOURCE_DIR}/src/view/*.h"
+            "${PROJECT_SOURCE_DIR}/lib/*.h"
+            "${PROJECT_SOURCE_DIR}/lib/pyboostcvconverter/*.h"
+
+            )
+file(GLOB project_ui
+    "${PROJECT_SOURCE_DIR}/src/ui/*.ui"
+    )
 
 #equivalent of DEFINES += QT_NO_VERSION_TAGGING in .pro file -> https://forum.qt.io/topic/38865/solved-cmake-equivalent-of-qmake-defines/3
 #add_definitions(-DQT_NO_VERSION_TAGGING)
