@@ -13,7 +13,7 @@
 
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 //#include <Python.h>
-#include "Python_wrapper.h" //https://stackoverflow.com/questions/23068700/embedding-python3-in-qt-5
+#include "lib/Python_wrapper.h" //https://stackoverflow.com/questions/23068700/embedding-python3-in-qt-5
 #include <numpy/ndarrayobject.h>
 #include <opencv2/core/core.hpp>
 #include <boost/python.hpp>
