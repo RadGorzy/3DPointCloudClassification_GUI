@@ -49,20 +49,21 @@ set(project_headers mainwindow.h pointCloud.h projection.h segmentation.h cloudF
     saveSettings.h)
 set(project_ui mainwindow.ui saveSettings.ui)
 ]]
+
 file(GLOB project_sources
-    "${PROJECT_SOURCE_DIR}/src/core/*.cpp"
+    "${PROJECT_SOURCE_DIR}/src/model/*.cpp"
     "${PROJECT_SOURCE_DIR}/src/controller/*.cpp"
     "${PROJECT_SOURCE_DIR}/src/view/*.cpp"
     "${PROJECT_SOURCE_DIR}/lib/pyboostcvconverter/*.cpp"
     "${PROJECT_SOURCE_DIR}/lib/*.cpp"
     )
 file(GLOB project_headers
-            "${PROJECT_SOURCE_DIR}/src/core/*.h"
-            "${PROJECT_SOURCE_DIR}/src/controler/*.h"
+            "${PROJECT_SOURCE_DIR}/src/model/*.h"
+            "${PROJECT_SOURCE_DIR}/src/controller/*.h"
             "${PROJECT_SOURCE_DIR}/src/view/*.h"
             "${PROJECT_SOURCE_DIR}/lib/*.h"
             "${PROJECT_SOURCE_DIR}/lib/pyboostcvconverter/*.h"
-
+            "${PROJECT_SOURCE_DIR}/lib/pyboostcvconverter/*.hpp"
             )
 file(GLOB project_ui
     "${PROJECT_SOURCE_DIR}/src/ui/*.ui"

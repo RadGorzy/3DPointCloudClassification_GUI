@@ -1,4 +1,4 @@
-#include "pointCloudController.h"
+#include "src/controller/pointCloudController.h"
 
 
 PointCloudController::PointCloudController()

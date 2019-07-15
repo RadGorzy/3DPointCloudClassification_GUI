@@ -1,4 +1,4 @@
-#include "saveSettings.h"
+#include "src/view/saveSettings.h"
 #include "ui_saveSettings.h"
 
 SaveSettings::SaveSettings(QWidget *parent) :
