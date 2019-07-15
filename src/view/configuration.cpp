@@ -1,4 +1,4 @@
-#include "configuration.h"
+#include "src/view/configuration.h"
 
 Configuration::Configuration(QMainWindow* mW)
 {
