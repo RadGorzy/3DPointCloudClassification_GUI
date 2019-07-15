@@ -5,8 +5,8 @@
 
 #include <QObject>
 #include <QThread>
-#include <pointCloudController.h>
-#include "typeDefForThreding.h"
+#include "src/controller/pointCloudController.h"
+#include "src/controller/typeDefForThreding.h"
 
 class Worker : public QObject
 {

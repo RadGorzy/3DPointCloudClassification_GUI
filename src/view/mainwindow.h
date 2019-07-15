@@ -17,9 +17,9 @@
 //#include <memory> //do std::make_unique
 #include <string>
 class CloudScene;
-#include "pointCloud.h"
+#include "src/model/pointCloud.h"
 class CloudSceneFactory;
-#include "cloudFactory.h"
+#include "src/model/cloudFactory.h"
 ////////#
 // Point Cloud Library
 #include <pcl/point_cloud.h>
@@ -30,16 +30,16 @@ class CloudSceneFactory;
 #include <vtkRenderWindow.h>
 
 class PointCloudController;
-#include "pointCloudController.h"
+#include "src/controller/pointCloudController.h"
 class ThreadController;
-#include "threadController.h"
-#include "qdebugStream.h"
-#include "helperFunctions.h"
+#include "src/controller/threadController.h"
+#include "lib/qdebugStream.h"
+#include "lib/helperFunctions.h"
 
-#include "prepareDatasetController.h"
-#include "configuration.h"
+#include "src/controller/prepareDatasetController.h"
+#include "src/view/configuration.h"
 
-#include"saveSettings.h"
+#include"src/view/saveSettings.h"
 
 
 typedef pcl::PointXYZRGBA PointT;
