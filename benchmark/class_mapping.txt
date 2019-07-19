@@ -1,0 +1,5 @@
+vehicle
+wall
+vegetation
+pole
+pedestrian

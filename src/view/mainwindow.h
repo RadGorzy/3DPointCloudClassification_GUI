@@ -39,7 +39,8 @@ class ThreadController;
 #include "src/controller/prepareDatasetController.h"
 #include "src/view/configuration.h"
 
-#include"src/view/saveSettings.h"
+#include "src/view/saveSettings.h"
+#include "src/view/memorySettings.h"
 
 
 typedef pcl::PointXYZRGBA PointT;
@@ -104,6 +105,12 @@ private slots:
 
     void on_actionload_clouds_triggered();
 
+    void on_actionMemory_triggered();
+
+    void on_benchmarkSaveFolder_pushButton_clicked();
+
+    void on_selectClassMapping_pushButton_clicked();
+
 public slots: //if we use connect (old style SLOT and SIGNAL) we have to declare used there functions as public slots
     void tescik();
     void visualize();
@@ -150,6 +157,10 @@ private:
     std::shared_ptr<ClassificationType> getClassificationType();
     std::shared_ptr<BoundingBoxType> getBoundingBoxType();
     std::shared_ptr<BenchmarkType> getBenchmarkType();
+
+    std::shared_ptr<PrepareDatasetFrom3D> getPrepareDatasetFrom3DType();
+
+    std::unique_ptr<MemorySettings> memorySettings;
 
 };
 #endif // MAINWINDOW_H

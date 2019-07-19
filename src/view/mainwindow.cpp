@@ -89,6 +89,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeWidget->insertTopLevelItem(0, item1);
     ui->treeWidget->insertTopLevelItem(0, item2);
 
+    //initilize memory settings -only once during porgram execution so we retain selected options, later we call only memorySettings->exec();
+    this->memorySettings=std::make_unique<MemorySettings>(this);
+
     //add widgets whose text we want to save to configuration file
     config=std::make_unique<Configuration>(this);
     //config->addWidget(this->ui->decimation_spinBox);
@@ -190,6 +193,21 @@ void MainWindow::on_classificationModel_pushButton_clicked()
     }
 
 }
+void MainWindow::on_benchmarkSaveFolder_pushButton_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open benchmark save directory"),
+                                                    "/home",
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+    ui->benchmarkSaveFolder_lineEdit->setText(dir);
+}
+void MainWindow::on_selectClassMapping_pushButton_clicked()
+{
+    QString classMappingFilePath="";
+    classMappingFilePath=QFileDialog::getOpenFileName(this,tr("Select file with class mapping"),"/home/",tr("(*.txt)"));
+    ui->selectClassMapping_lineEdit->setText(classMappingFilePath);
+}
+
 void MainWindow::setController(std::shared_ptr<PointCloudController> contr){
     this->controller=contr;
     this->controller->registerQTreeWidgetObserver(this->ui->treeWidget);
@@ -475,29 +493,54 @@ void MainWindow::on_actionload_clouds_triggered()
     loadCloudsFile=QFileDialog::getOpenFileName(this,tr("Select folder with clouds to load"),"/home/",tr("(*.txt)"));
     this->controller->loadClouds(loadCloudsFile);
 }
+
+void MainWindow::on_actionMemory_triggered()
+{
+
+    bool accepted=0;
+    accepted=memorySettings->exec();
+
+    if(accepted){
+        this->controller->setCachedCloudsMemoryLimit(memorySettings->getMemoryLimit());
+    }
+}
 //////////////////////Prepare tab /////////////////
-void MainWindow::prepareFrom3D(){
+std::shared_ptr<PrepareDatasetFrom3D> MainWindow::getPrepareDatasetFrom3DType(){
     std::shared_ptr<PrepareDatasetFrom3D> prepareDatasetType;
     switch(ui->preparedImageType_comboBox->currentIndex()){
     //binary
     case 0:
     {
-        prepareDatasetType = std::make_shared<PrepareBinaryImages>(/*TOTAL_PROJECTIONS*/500, /*START_DEGREE*/0, /*END_DEGREE*/350, /*START_v*/0, /*END_v*/45, /*N_v*/2);
+        prepareDatasetType = std::make_shared<PrepareBinaryImages>(/*TOTAL_PROJECTIONS*/ui->prepareTotalProj_spinBox_18->value()
+                                                                   , /*START_DEGREE*/ui->prepareHorStartDeg_doubleSpinBox_11->value()
+                                                                   , /*END_DEGREE*/ui->prepareHorEndDeg_doubleSpinBox_12->value()
+                                                                   , /*START_v*/ui->prepareVertStartDeg_doubleSpinBox_13->value()
+                                                                   , /*END_v*/ui->prepareVertEndDeg_doubleSpinBox_14->value()
+                                                                   , /*N_v*/ui->prepareNumOfVertViews_spinBox_19->value());
         break;
     }
     //range image
     case 1:
     {
-        prepareDatasetType = std::make_shared<PrepareBinaryImages>(/*TOTAL_PROJECTIONS*/500, /*START_DEGREE*/0, /*END_DEGREE*/350, /*START_v*/0, /*END_v*/45, /*N_v*/2);
+        prepareDatasetType = std::make_shared<PrepareRangeImages>(/*TOTAL_PROJECTIONS*/ui->prepareTotalProj_spinBox_18->value()
+                                                                  , /*START_DEGREE*/ui->prepareHorStartDeg_doubleSpinBox_11->value()
+                                                                  , /*END_DEGREE*/ui->prepareHorEndDeg_doubleSpinBox_12->value()
+                                                                  , /*START_v*/ui->prepareVertStartDeg_doubleSpinBox_13->value()
+                                                                  , /*END_v*/ui->prepareVertEndDeg_doubleSpinBox_14->value()
+                                                                  , /*N_v*/ui->prepareNumOfVertViews_spinBox_19->value());
         break;
     }
     default:
     {
         qDebug()<<"No such PrepareDatasetFrom3D type defined, select different";
-        return;
+        return nullptr;
     }
     }
+    return prepareDatasetType;
+}
+void MainWindow::prepareFrom3D(){
 
+    std::shared_ptr<PrepareDatasetFrom3D> prepareDatasetType=getPrepareDatasetFrom3DType();
     this->threadController->prepareFrom3D(this->prepareDatasetController,prepareDatasetType);
 }
 void MainWindow::treeCustomMenu(const QPoint & pos)
@@ -545,9 +588,6 @@ void MainWindow::on_actionload_configuration_triggered()
     selected=QFileDialog::getOpenFileName(this,tr("Load configuration file"),"/home/",tr("(*.txt *dat)"));
     this->config->loadConfiguration(selected);
 }
-
-
-
 
 
 

@@ -5,7 +5,6 @@
 #include "lib/helperFunctions.h"
 #include <random>
 PrepareDatasetFrom3D::PrepareDatasetFrom3D(uint TOTAL_PROJECTIONS, double START_DEGREE,double END_DEGREE ,double START_v,double END_v,int N_v):TOTAL_PROJECTIONS(TOTAL_PROJECTIONS),START_DEGREE(START_DEGREE),END_DEGREE(END_DEGREE),START_v(START_v),END_v(END_v),N_v(N_v){
-    std::cout<<"Created factory (in PrepareDatasetFrom3D"<<std::endl;
     this->factory=std::make_shared<CloudObjectFactory>();
 }
 int PrepareDatasetFrom3D::calculateNumberOfProjections(uint num_of_class_obj){

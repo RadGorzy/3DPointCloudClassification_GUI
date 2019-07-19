@@ -81,10 +81,10 @@ public:
     virtual std::vector<int> getCloudsIDs();
     virtual std::vector<float> getNNResopneVector();
     virtual int getNumberOfClouds();
-
+    virtual std::size_t getCloudSize();
 
     CloudComponent* getCloud();
-    size_t getCloudSize();
+    size_t getCloudNumberOfPoints();
     cloudType getCloudType();
     std::string getName();
     std::string getSourcePath();
@@ -132,6 +132,7 @@ public:
     int getCloudClassID();
     int getCloudID();
     std::vector<float> getNNResopneVector();
+    std::size_t getCloudSize();
 
     void setController(std::shared_ptr<PointCloudController> ctr);
     void updateView();
@@ -182,6 +183,7 @@ public:
     std::vector<int> getCloudsClassIDs();
     std::vector<int> getCloudsIDs();
     int getNumberOfClouds();
+    std::size_t getCloudSize();
 
     void setController(std::shared_ptr<PointCloudController> ctr);
     void setBenchmarkType(std::shared_ptr<BenchmarkType> benchamrkType,int objectID);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1015</width>
-    <height>584</height>
+    <height>667</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -73,7 +73,7 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>488</width>
+                     <width>269</width>
                      <height>310</height>
                     </rect>
                    </property>
@@ -273,7 +273,7 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>488</width>
+                     <width>285</width>
                      <height>478</height>
                     </rect>
                    </property>
@@ -533,8 +533,8 @@
                    <property name="geometry">
                     <rect>
                      <x>0</x>
-                     <y>0</y>
-                     <width>488</width>
+                     <y>-40</y>
+                     <width>263</width>
                      <height>108</height>
                     </rect>
                    </property>
@@ -573,7 +573,7 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>488</width>
+                     <width>263</width>
                      <height>231</height>
                     </rect>
                    </property>
@@ -855,8 +855,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>474</width>
-                    <height>331</height>
+                    <width>311</width>
+                    <height>414</height>
                    </rect>
                   </property>
                   <attribute name="label">
@@ -887,7 +887,11 @@
                       </widget>
                      </item>
                      <item row="0" column="1">
-                      <widget class="QSpinBox" name="spinBox_18"/>
+                      <widget class="QSpinBox" name="prepareTotalProj_spinBox_18">
+                       <property name="maximum">
+                        <number>1000000</number>
+                       </property>
+                      </widget>
                      </item>
                      <item row="2" column="0">
                       <widget class="QLabel" name="label_33">
@@ -925,21 +929,42 @@
                       </widget>
                      </item>
                      <item row="1" column="1">
-                      <widget class="QDoubleSpinBox" name="doubleSpinBox_11"/>
+                      <widget class="QDoubleSpinBox" name="prepareHorStartDeg_doubleSpinBox_11">
+                       <property name="maximum">
+                        <double>360.000000000000000</double>
+                       </property>
+                      </widget>
                      </item>
                      <item row="2" column="1">
-                      <widget class="QDoubleSpinBox" name="doubleSpinBox_12"/>
+                      <widget class="QDoubleSpinBox" name="prepareHorEndDeg_doubleSpinBox_12">
+                       <property name="maximum">
+                        <double>360.000000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>350.000000000000000</double>
+                       </property>
+                      </widget>
                      </item>
                      <item row="3" column="1">
-                      <widget class="QDoubleSpinBox" name="doubleSpinBox_13"/>
+                      <widget class="QDoubleSpinBox" name="prepareVertStartDeg_doubleSpinBox_13"/>
                      </item>
                      <item row="4" column="1">
-                      <widget class="QDoubleSpinBox" name="doubleSpinBox_14"/>
+                      <widget class="QDoubleSpinBox" name="prepareVertEndDeg_doubleSpinBox_14">
+                       <property name="maximum">
+                        <double>90.000000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>45.000000000000000</double>
+                       </property>
+                      </widget>
                      </item>
                      <item row="5" column="1">
-                      <widget class="QSpinBox" name="spinBox_19">
+                      <widget class="QSpinBox" name="prepareNumOfVertViews_spinBox_19">
                        <property name="minimum">
                         <number>1</number>
+                       </property>
+                       <property name="value">
+                        <number>2</number>
                        </property>
                       </widget>
                      </item>
@@ -959,8 +984,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>474</width>
-                    <height>331</height>
+                    <width>311</width>
+                    <height>414</height>
                    </rect>
                   </property>
                   <attribute name="label">
@@ -1015,17 +1040,6 @@
                   </property>
                   <property name="flags">
                    <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>a</string>
-                  </property>
-                  <property name="text">
-                   <string>b</string>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
                   </property>
                  </item>
                 </widget>
@@ -1101,8 +1115,15 @@
     <addaction name="actionClassification"/>
     <addaction name="actionTraining_data_preparation"/>
    </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionMemory"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuTools"/>
+   <addaction name="menuSettings"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -1141,6 +1162,11 @@
   <action name="actionload_clouds">
    <property name="text">
     <string>load clouds</string>
+   </property>
+  </action>
+  <action name="actionMemory">
+   <property name="text">
+    <string>Memory</string>
    </property>
   </action>
  </widget>

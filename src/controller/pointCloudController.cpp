@@ -72,6 +72,17 @@ void PointCloudController::clearTreeWidgetTreeChildren(){
           ++it;
       }
 }
+std::size_t PointCloudController::getMemoryUsageOfCachedClouds(){
+    std::size_t total_size=0;
+    for(auto const &cloud:cachedClouds){
+        //updateTreeWidgetItem(cloud->getSourcePath(),cloud->getCloudsNames());
+        total_size=total_size+cloud->getCloudSize();
+    }
+    return total_size;
+}
+void PointCloudController::setCachedCloudsMemoryLimit(std::size_t limit){
+    this->cachedCloudsMemoryLimit=limit;
+}
 /**
  * @brief PointCloudController::updateView
  * updates whole view
@@ -82,6 +93,7 @@ void PointCloudController::updateView(){
         //updateTreeWidgetItem(cloud->getSourcePath(),cloud->getCloudsNames());
         cloud->updateView();
     }
+    qDebug()<<"TOTAL MEMORY USAGE BY CLOUDS[MB]="<<static_cast<float>(getMemoryUsageOfCachedClouds())/static_cast<float>(1000000);
 }
 /**
  * @brief PointCloudController::updateView
@@ -209,10 +221,9 @@ bool PointCloudController::updateCachedCloudsContainer(QTreeWidgetItem* selected
     }
     //else check if memory is available and create new CloudScene or CloudObject object
     else{
-        //#UWAGA TYMCZASOWE ROZWIAZANIE dla sprawdzenia uzywam tylko limitu ilosci chmur w pamieci-> docelowo powinienem uzywac np. rozmiaru chmur (ilosc punktow) albo ilosci ramu jaka zajmuje vcector scenes
-        //if too many cloudScenes are cached, delete the oldest (first added) ones
-        while(cachedClouds.size()+1>cachedCloudScenesLimit){
-            qDebug()<<"deleting: "<<cachedClouds.at(0)->getName().c_str();
+        //if cached cloud scenes occupy to much memory, delete the oldest (first added) ones
+        while(getMemoryUsageOfCachedClouds()>static_cast<std::size_t>(cachedCloudsMemoryLimit*1000000)){
+            qDebug()<<"deleting: "<<cachedClouds.at(0)->getName().c_str()<<" beacuse memory limit for cached clouds was exceeded - you can change it in settings";
             cachedClouds.erase(cachedClouds.begin());
             //this->observer->updateTreeWidgetItem(cloudPath,{}); //we delete items assosiated with segmented objects which doesnt exist any more (because we deleted secen holding them)
             //#UWAGA -> czy na pewno usuwajac scene usuwam tez obiekty (posegmentowane) znajdujace sie w niej w postaci wektora clouds ? -> moze cloud objects tez powinny byc unique_ptr, albo powienienm je usuwac jakosc dla pewnosci w destruktorze CloudScene ?
