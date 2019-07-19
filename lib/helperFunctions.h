@@ -92,41 +92,47 @@ inline void get_image_dimensions(std::string path, unsigned int &width,unsigned 
   */
 inline void list_dir(std::vector<std::string> &results,std::string curr_directory, std::string extension,int files_or_folders=1,bool remove_extension=0){  //files_or_folders=1 - list only files, 2-list only folders
     DIR* dir_point = opendir(curr_directory.c_str());
-    dirent* entry = readdir(dir_point);
-    while (entry){									// if !entry then end of directory
-        if (entry->d_type == DT_DIR){				// if entry is a directory
-            if(files_or_folders==1)
-                std::cout<<entry->d_name<<" is directory, skipping"<<std::endl;
-            else if(files_or_folders==2){
-                std::string fname = entry->d_name;
-                if (fname != "." && fname != "..")
-                {
-                    results.push_back(fname);
-                }
-            }
-
-            //list_dir(entry->d_name, extension);	// search through it
-        }
-        else if (entry->d_type == DT_REG){		// if entry is a regular file
-            if(files_or_folders==1)
-            {
-                std::string fname = entry->d_name;	// filename
-                // if filename's last characters are extension
-                if (fname.find(extension, (fname.length() - extension.length())) != std::string::npos) {
-                    if (remove_extension) {
-                        fname = fname.substr(0, fname.length() - extension.length());
+    if(dir_point!=nullptr){
+        dirent* entry = readdir(dir_point);
+        while (entry){									// if !entry then end of directory
+            if (entry->d_type == DT_DIR){				// if entry is a directory
+                if(files_or_folders==1)
+                    std::cout<<entry->d_name<<" is directory, skipping"<<std::endl;
+                else if(files_or_folders==2){
+                    std::string fname = entry->d_name;
+                    if (fname != "." && fname != "..")
+                    {
+                        results.push_back(fname);
                     }
-                    results.push_back(fname);        // add filename to results vector
-                } else
-                    std::cout<<"File "<<fname<<" doesnt have apporpriate extension ( "<<extension<<" ) , skipping"<<std::endl;
-            }
-            else if(files_or_folders==2)
-                std::cout<<entry->d_name<<" is a file, skipping"<<std::endl;
-        }
+                }
 
-        entry = readdir(dir_point);
+                //list_dir(entry->d_name, extension);	// search through it
+            }
+            else if (entry->d_type == DT_REG){		// if entry is a regular file
+                if(files_or_folders==1)
+                {
+                    std::string fname = entry->d_name;	// filename
+                    // if filename's last characters are extension
+                    if (fname.find(extension, (fname.length() - extension.length())) != std::string::npos) {
+                        if (remove_extension) {
+                            fname = fname.substr(0, fname.length() - extension.length());
+                        }
+                        results.push_back(fname);        // add filename to results vector
+                    } else
+                        std::cout<<"File "<<fname<<" doesnt have apporpriate extension ( "<<extension<<" ) , skipping"<<std::endl;
+                }
+                else if(files_or_folders==2)
+                    std::cout<<entry->d_name<<" is a file, skipping"<<std::endl;
+            }
+
+            entry = readdir(dir_point);
+        }
+    }else{
+        std::cout<<"Could not open "<<curr_directory<<" directory"<<std::endl;
+        return;
     }
-    return;
+
+
 }
 //Funkcja zwracajaca n unikalnych i losowych elementow z podanego np. vectora :
 // https://stackoverflow.com/questions/9345087/choose-m-elements-randomly-from-a-vector-containing-n-elements

@@ -64,7 +64,10 @@ std::vector<float> CloudComponent::getNNResopneVector(){return {};}
 int CloudComponent::getNumberOfClouds(){
     return 0;
 }
-
+std::size_t CloudComponent::getCloudSize(){
+    std::cout<<"Cannot getCloudSize() - Operation not supotted for this cloudType class"<<std::endl;
+    return 0;
+}
 std::string CloudComponent::getCloudClassName(){
     if(benchmarkType!=nullptr){
         return this->benchmarkType->mapClass(this->getCloudClassID());
@@ -87,7 +90,7 @@ void CloudComponent::saveCloud(std::string FILEPATH){
 CloudComponent* CloudComponent::getCloud(){
     return this;
 }
-size_t CloudComponent::getCloudSize(){
+size_t CloudComponent::getCloudNumberOfPoints(){
     if(this->cloud!=nullptr){
         return this->cloud->size();
     }else{
@@ -232,6 +235,9 @@ std::vector<float> CloudObject::getNNResopneVector(){
     }else{
         return {};
     }
+}
+std::size_t CloudObject::getCloudSize(){
+    return sizeof(pcl::PointXYZ)*this->cloud->size();
 }
 
 void CloudObject::setController(std::shared_ptr<PointCloudController> ctr){
@@ -526,7 +532,13 @@ std::vector<int> CloudScene::getCloudsIDs(){
 int CloudScene::getNumberOfClouds(){
     return clouds.size();
 }
-
+std::size_t CloudScene::getCloudSize(){
+    std::size_t total_size=sizeof(pcl::PointXYZ)*this->cloud->size(); //additionaly to vector of clouds, CloudComponent stores original cloud so we also have to take into account its size
+    for(auto &cloud:clouds){
+        total_size=total_size+cloud->getCloudSize();
+    }
+    return total_size;
+}
 void CloudScene::setController(std::shared_ptr<PointCloudController> ctr){
     this->controller=ctr;
     std::cout<<"SET CONTROLLER FOR SCENE"<<endl;

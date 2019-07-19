@@ -95,24 +95,39 @@ std::unique_ptr<QWidgetConfigurationAdapter> Configuration::wrap(QWidget *qWidge
     //file.open(QIODevice::WriteOnly);
     //QDataStream out(&file);   // we will serialize the data into the file
     //out << QString(data);
-    /////
 
 bool Configuration::saveConfiguration(QString path){
     std::unique_ptr<QWidgetConfigurationAdapter> adapter;
     QString data="";
     QString name="no_name_set";
+    QStringList lineSeen={};
     QFile file(path);
+
     if (file.open(QIODevice::WriteOnly| QIODevice::Truncate)) {
         QTextStream stream(&file);
         for(auto widget:this->widgets){
             //we could skip writing widget name, but with widget names file can be read seperatly more clearly
             name=widget->objectName();
+            /**
+             * @brief if(lineSeen.contains(name)){continue;} - dont save duplicated names:
+             * QObject::findChildren function returns all children of widgets. It includes also some strange names as:
+             * 'qt_spinbox_lineedit'. So one widget, lets say mySpin_QSpinBox has also child 'qt_spinbox_lineedit'. So when we want
+             * to save configuration from two widget types (QSpinBox and QLineEdit) we also save name and value for this 'qt_spinbox_lineedit'
+             * and because each spin box has this child with the same name, we can unintenionaly assign wrong value to widgets during loading
+             * configuration.
+             * Assuming widgets named by us (or automatically named in designer) have all unique names, we can get rid of above problem
+             * removing (not saving) all repeated names in list returned form findChildren -> this way we will get rid of unwanted chidlren (for ex."qt_spinbox_lineedit")
+             * and avoid wrong configuration loading
+             */
+            if(lineSeen.contains(name)){continue;}
+            lineSeen.push_back(name);
 
             adapter= wrap(widget);
 
             data=adapter->getConfigurationData();
             stream <<name<<" "<< data << endl;
         }
+
         file.close();
         qDebug()<<"CONFIGURATION SAVED";
         return true;
