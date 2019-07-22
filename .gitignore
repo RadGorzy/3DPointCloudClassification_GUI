@@ -3,3 +3,4 @@ build/
 *.pro
 *.backup
 *.autosave
+deploymentCommands
