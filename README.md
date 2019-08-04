@@ -22,7 +22,10 @@ Code is written in a way that allows easy extension of functionality.
 	* perform required operation (view, segment, project,..., save buttons)
 
 ### Dependency:
-	Tested with PCL 1.9,tensorflow-gpu 1.12.0, Qt 5.12 and VTK-8.2.0 under ubuntu 18.04
+	Tested with PCL 1.9,tensorflow-gpu 1.12.0, Qt 5.12 and VTK-8.2.0, python >=3.5 under ubuntu 18.04 and 16.04
+When using AppImage from releases, only these dependencies are required:
+###     
+	python >= 3.5, tensorflow, numpy
 	
 to build:
 ```
@@ -41,3 +44,4 @@ Available: http://www.cvlibs.net/datasets/kitti/raw_data.php?type=city. [Acces d
 
 [2] B. Vallet, M. Brédif, A. Serna, B. Marcotegui i N. Paparoditis, „TerraMobilita/iQmulus
 urban point cloud analysis benchmark,” Computers and Graphics, 49, pp. 126-133, 2015.
+

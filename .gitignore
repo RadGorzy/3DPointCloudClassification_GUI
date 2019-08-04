@@ -4,3 +4,5 @@ build/
 *.backup
 *.autosave
 deploymentCommands
+releases/
+bin/
