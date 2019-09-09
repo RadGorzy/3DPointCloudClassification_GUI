@@ -34,4 +34,15 @@ public:
     std::vector<pcl::PointCloud<pcl::PointXYZ>::Ptr>  segment(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
     pcl::PointCloud<pcl::PointNormal> getDonCloud();
 };
+
+class EuclideanClustering:public SegmentationType{
+private:
+    double segradius, minClusterSize, maxClusterSize;
+    std::vector<pcl::PointIndices> clusterIndices;
+    void getClustersIndecies(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
+public:
+    EuclideanClustering(double segRadius=0.4, int minClusterSize=50, int maxClusterSize=4000000);
+    std::vector<pcl::PointCloud<pcl::PointXYZ>::Ptr> segment(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
+};
+
 #endif //INC_3DPOINTCLOUDCLASSIFICATION_SEGMENTATION_H

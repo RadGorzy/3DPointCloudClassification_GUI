@@ -261,6 +261,14 @@ std::shared_ptr<SegmentationType> MainWindow::getSegmentationType(){
                                                              ,/*scale2_1*/ui->scale2_twoStep_doubleSpinBox_6->value());
         break;
     }
+    //just euclidean cluster extraction
+    case 2:
+    {
+        segmentationType = std::make_shared<EuclideanClustering>(/*radius*/ui->EuclideanCluSegRadius_doubleSpinBox->value()
+                                                                 ,/*min cluster size*/ui->EuclideanCluMinClusterSize_spinBox->value()
+                                                                 ,/*max cluster size*/ui->EuclideanCluMaxClusterSize_spinBox_2->value());
+        break;
+    }
     default:
     {
         qDebug()<<"No such segmentation type defined, select different";

@@ -336,4 +336,47 @@ std::vector<pcl::PointCloud<pcl::PointXYZ>::Ptr>  DONSegmentation::segment(pcl::
     return cloudObjects;
 }
 pcl::PointCloud<pcl::PointNormal> DONSegmentation::getDonCloud(){return *(this->doncloud);}
+////////////////////
+EuclideanClustering::EuclideanClustering(double segRadius, int minClusterSize, int maxClusterSize):segradius(segRadius),minClusterSize(minClusterSize),maxClusterSize(maxClusterSize){}
+void EuclideanClustering::getClustersIndecies(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud){
+    clusterIndices.clear();
+
+    pcl::search::KdTree<pcl::PointXYZ>::Ptr segtree (new pcl::search::KdTree<pcl::PointXYZ>);
+    segtree->setInputCloud (cloud);
+
+    pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
+    ec.setClusterTolerance (segradius);
+    ec.setMinClusterSize (minClusterSize); //200
+    ec.setMaxClusterSize (maxClusterSize); //100000 12.08.2018
+    ec.setSearchMethod (segtree);
+    ec.setInputCloud (cloud);
+    ec.extract (clusterIndices);
+    //printf("found %s clusters",cluster_indices.size());
+    std::cout<<"Found "<<clusterIndices.size()<<" objects in "<<CLOUD_NAME<<std::endl;
+}
+/*
+ * Create point cloud from cluster indecies
+ * */
+std::vector<pcl::PointCloud<pcl::PointXYZ>::Ptr> EuclideanClustering::segment(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud){
+    getClustersIndecies(cloud);
+
+    std::vector<pcl::PointCloud<pcl::PointXYZ>::Ptr> cloudObjects;
+    int j=0;
+
+    for (std::vector<pcl::PointIndices>::const_iterator it = clusterIndices.begin (); it != clusterIndices.end (); ++it, j++) {
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_xyz (new pcl::PointCloud<pcl::PointXYZ>); //for conversion from PointCloud<PointNormal> to PointClous<PointXYZ>
+        //->? cloud_xyz-> za kazdym razem trzeba tworzyc nowy obiket (i wskaznik) bo inaczej caly czas wskazujemy na to samo miejsce w pamieci, i tylko zmienamy w tym miejscu chmury (przez co pamietamy tylko ostatnia)
+        for (auto pit = it->indices.begin(); pit != it->indices.end(); ++pit) {
+            cloud_xyz->points.push_back(cloud->points[*pit]); //it is necessary here to use doncloud (PointCloud<PointNormal>), it wont work with PointXYZ cloud because clusterIndecies where retrived using: pcl::EuclideanClusterExtraction<pcl::PointNormal> ec
+        }                                                                  //so clusterIndices holds indecies of PointNormal
+
+        cloud_xyz->width = static_cast<uint32_t >(cloud_xyz->points.size());
+        cloud_xyz->height = 1;
+        cloud_xyz->is_dense = true;
+
+        cloudObjects.push_back(cloud_xyz);
+    }
+
+    return cloudObjects;
+}
 

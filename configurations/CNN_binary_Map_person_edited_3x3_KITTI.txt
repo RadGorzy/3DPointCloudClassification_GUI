@@ -1,6 +1,8 @@
 prepareTotalProj_spinBox_18 500
 prepareNumOfVertViews_spinBox_19 2
-decimation_twoStep_spinBox_2 0
+decimation_twoStep_spinBox_2 5
+EuclideanCluMinClusterSize_spinBox 50
+EuclideanCluMaxClusterSize_spinBox_2 4000000
 decimation_spinBox 5
 n_proj_rangeImg_spinBox_13 0
 n_h_proj_rangeImg_spinBox_16 0
@@ -14,11 +16,12 @@ prepareHorEndDeg_doubleSpinBox_12 350
 prepareVertStartDeg_doubleSpinBox_13 0
 prepareVertEndDeg_doubleSpinBox_14 45
 scale1_twoStep_doubleSpinBox_5 5
-scale2_twoStep_doubleSpinBox_6 0
-threshold_twoStep_doubleSpinBox_7 0
-segradius_twoStep_doubleSpinBox_8 0
-scale1_1_twoStep_doubleSpinBox_9 0
-scale2_1_twoStep_doubleSpinBox_10 0
+scale2_twoStep_doubleSpinBox_6 50
+threshold_twoStep_doubleSpinBox_7 0.3
+segradius_twoStep_doubleSpinBox_8 0.4
+scale1_1_twoStep_doubleSpinBox_9 0.8
+scale2_1_twoStep_doubleSpinBox_10 8
+EuclideanCluSegRadius_doubleSpinBox 0.4
 scale1_doubleSpinBox 0.4
 scale2_doubleSpinBox_2 4
 threshold_doubleSpinBox_3 0.25
@@ -32,7 +35,7 @@ max_deg_doubleSpinBox_4 350
 min_h_doubleSpinBox_5 0
 max_h_doubleSpinBox_7 0
 memoryLimit_doubleSpinBox 10000
-approx_twoStep_checkBox_2 false
+approx_twoStep_checkBox_2 true
 approx_checkBox true
 orientedBB_checkBox false
 dontClassify_checkBox false
