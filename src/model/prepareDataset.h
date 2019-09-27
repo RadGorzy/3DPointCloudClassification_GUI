@@ -8,10 +8,23 @@
 #include <string>
 class CloudObject;
 class CloudObjectFactory;
+class CloudSceneFactory;
 #include "src/model/pointCloud.h"
+#include <boost/filesystem.hpp> //for recursive directory traversing
+//#include <omp.h>
 
 class PrepareDataset {
-
+public:
+    PrepareDataset(std::string inP, std::string outP);
+    bool containsCls(std::string cls);
+    void setInPath(std::string inP);
+    void setOutPath(std::string outP);
+    void setClassesOfInterest(std::vector<std::string> classes);
+protected:
+    std::string inPath;
+    std::string outPath;
+    std::vector<std::string> classesOfInterest={};
+    std::vector<std::tuple<std::string,std::string,std::string>> getPathAndNameAndParentFolderName(const std::string extension=".pcd",bool removeExtensionFromName=true);
 };
 class PrepareDatasetFrom3D:public PrepareDataset{
 protected:
@@ -47,5 +60,15 @@ public:
     void prepare(std::string SRC_PATH, std::string PROJECTIONS_PATH);
 };
 
+class ExtractObjectsInstances:public PrepareDataset{
+    std::shared_ptr<SegmentationType> segType;
+    std::unique_ptr<CloudScene> scene;
+    std::unique_ptr<CloudObject> object;
+    std::unique_ptr<CloudSceneFactory> sceneFactory;
+    std::shared_ptr<CloudObjectFactory> objectFactory;
+public:
+    ExtractObjectsInstances(std::shared_ptr<SegmentationType> sType,std::string inPath, std::string outPath);
+    void extract();
+};
 
 #endif //INC_3DPOINTCLOUDCLASSIFICATION_PREPAREDATASET_H

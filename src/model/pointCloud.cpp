@@ -200,7 +200,11 @@ void CloudObject::visualize(){
     //...
 }
 void CloudObject::saveCloud(std::string FILEPATH){
-    std::cout<<"Saving "<<FILEPATH+"/"+this->name<<" cloud"<<std::endl;
+    FILEPATH=FILEPATH+"/"+this->name;
+    if(!ends_with(this->name,".pcd")){
+            FILEPATH=FILEPATH+".pcd";
+    }
+    std::cout<<"Saving cloud to"<<FILEPATH<<std::endl;
     pcl::io::savePCDFileASCII (FILEPATH, *cloud);
 }
 void CloudObject::saveClouds(std::string FILEPATH){

@@ -27,6 +27,11 @@ void Worker::prepareFrom3D(const prepareDatasetControllerSharedPtr controller, p
     controller->prepare(prepareDatasetFrom3D);
     emit resultReady(result);
 }
+void Worker::extractObjectsInstances(const prepareDatasetControllerSharedPtr controller,extractObjectsInstancesSharedPtr extractObjectsInstances){
+    QString result="EXTRACTING SINGLE INSTANCES FROM SCENES WITH OBJECTS BELONGING TO SAME CLASSES FINISHED";
+    controller->extract(extractObjectsInstances);
+    emit resultReady(result);
+}
 ///////////////////////////////////////////
 ThreadController::ThreadController()
 {
@@ -43,6 +48,7 @@ ThreadController::ThreadController()
 
     qRegisterMetaType<prepareDatasetControllerSharedPtr>();
     qRegisterMetaType<prepareDatasetFrom3DSharedPtr>();
+    qRegisterMetaType<extractObjectsInstancesSharedPtr>();
 
     Worker *worker = new Worker;
     worker->moveToThread(&workerThread);
@@ -50,6 +56,7 @@ ThreadController::ThreadController()
     connect(this, &ThreadController::classify, worker, &Worker::classify);
     connect(this, &ThreadController::benchmark, worker, &Worker::benchmark);
     connect(this, &ThreadController::prepareFrom3D, worker, &Worker::prepareFrom3D);
+    connect(this, &ThreadController::extractObjectsInstances, worker, &Worker::extractObjectsInstances);
     connect(worker, &Worker::resultReady, this, &ThreadController::handleResults);
     workerThread.start();
 }

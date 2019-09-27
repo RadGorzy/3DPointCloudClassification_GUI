@@ -4,7 +4,52 @@
 #include "src/model/prepareDataset.h"
 #include "lib/helperFunctions.h"
 #include <random>
-PrepareDatasetFrom3D::PrepareDatasetFrom3D(uint TOTAL_PROJECTIONS, double START_DEGREE,double END_DEGREE ,double START_v,double END_v,int N_v):TOTAL_PROJECTIONS(TOTAL_PROJECTIONS),START_DEGREE(START_DEGREE),END_DEGREE(END_DEGREE),START_v(START_v),END_v(END_v),N_v(N_v){
+
+PrepareDataset::PrepareDataset(std::string inP, std::string outP): inPath(inP),outPath(outP){}
+/**
+ * @brief PrepareDataset::getPathAndNameAndParentFolderName
+ * @param extension
+ * @param removeExtensionFromName
+ * @param classes - only files that have parent folder with one of this names will be added to result vector
+ * @return vector of tuple each of which contains (in following order): path, file name (with extension or not), parent folder name
+ */
+std::vector<std::tuple<std::string,std::string,std::string>> PrepareDataset::getPathAndNameAndParentFolderName(const std::string extension,bool removeExtensionFromName){
+    std::vector<std::tuple<std::string,std::string,std::string>> result;
+    std::string filename,parentFolderName;
+
+    boost::filesystem::recursive_directory_iterator dir(inPath), end;
+    while (dir != end)
+    {
+        if (dir->path().extension().string() == extension)
+        {
+            filename=dir->path().filename().string();
+            parentFolderName=dir->path().parent_path().filename().string();
+            if(containsCls(parentFolderName)){
+                if(removeExtensionFromName){
+                    filename = filename.substr(0, filename.length() - (dir->path().extension().string()).length());
+                }
+                result.push_back(std::make_tuple(dir->path().string(),filename,parentFolderName));
+            }
+        }
+        ++dir;
+    }
+    return result;
+}
+bool PrepareDataset::containsCls(std::string cls){
+    if(classesOfInterest.empty()){return true;} //if we dont specify cls it means we want all classes
+
+    for(auto &word:classesOfInterest){
+        if(word==cls){
+            return true;
+        }
+    }
+    return false;
+}
+void PrepareDataset::setInPath(std::string inP){ this->inPath=inP;}
+void PrepareDataset::setOutPath(std::string outP){this->outPath=outP;}
+void PrepareDataset::setClassesOfInterest(std::vector<std::string> classes){this->classesOfInterest=classes;}
+
+PrepareDatasetFrom3D::PrepareDatasetFrom3D(uint TOTAL_PROJECTIONS, double START_DEGREE,double END_DEGREE ,double START_v,double END_v,int N_v):PrepareDataset("",""),TOTAL_PROJECTIONS(TOTAL_PROJECTIONS),START_DEGREE(START_DEGREE),END_DEGREE(END_DEGREE),START_v(START_v),END_v(END_v),N_v(N_v){
     this->factory=std::make_shared<CloudObjectFactory>();
 }
 int PrepareDatasetFrom3D::calculateNumberOfProjections(uint num_of_class_obj){
@@ -178,4 +223,32 @@ void PrepareRangeImages::prepare(std::string SRC_PATH, std::string PROJECTIONS_P
     }
 
     removeSurplusProjections(PROJECTIONS_PATH,n_horizontal,num_of_class_obj);
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+ExtractObjectsInstances::ExtractObjectsInstances(std::shared_ptr<SegmentationType> sType,std::string inPath, std::string outPath):PrepareDataset(inPath,outPath),segType(sType){
+     sceneFactory=std::make_unique<CloudSceneFactory>();
+     objectFactory=std::make_shared<CloudObjectFactory>();
+}
+void ExtractObjectsInstances::extract(){
+    std::vector<std::tuple<std::string,std::string,std::string>> paths_names_parentDir = getPathAndNameAndParentFolderName(".pcd",true);
+    std::string savePath="";
+#pragma omp parallel for //it looks like it doesnt work
+    for(auto const&file:paths_names_parentDir){
+        //std::cout<<std::get<0>(file)<<" | "<<std::get<1>(file)<<" | "<<std::get<2>(file)<<std::endl;
+        savePath=outPath+"/"+std::get<2>(file); //outPath+class_folder
+        if(!boost::filesystem::is_directory(savePath)){
+            std::cout<<"Directory "<<savePath<<" doesnt exist, creating it ..."<<std::endl;
+            if(boost::filesystem::create_directory(savePath)){
+                std::cout<<"succes - created directory"<<std::endl;
+            }else{
+                std::cout<<"fail - could not create directory"<<std::endl;
+                continue;
+            }
+        }
+        scene=sceneFactory->create(std::get<0>(file));
+        scene->setFactory(objectFactory);
+        scene->segment(segType);
+        scene->saveClouds(savePath);
+    }
+
 }

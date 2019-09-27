@@ -22,6 +22,8 @@ find_package( PythonLibs 3.5 REQUIRED )
 find_package( Boost COMPONENTS python REQUIRED )
 find_package(Boost COMPONENTS system thread python-py35 REQUIRED)
 
+find_package(OpenMP REQUIRED) # Find the package
+
 # Fix a compilation bug under ubuntu 16.04 (Xenial)
 list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
 
@@ -97,7 +99,8 @@ target_link_libraries(${PROJECT_NAME}
         ${PCL_LIBRARIES}
         ${OpenCV_LIBS}
         ${PYTHON_LIBRARIES}
-        ${Boost_LIBRARIES})
+        ${Boost_LIBRARIES}
+         ${OpenMP_CXX_LIBRARIES})
 
 # auto copy dlls if on windows
 if(WIN32)

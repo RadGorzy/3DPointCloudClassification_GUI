@@ -28,7 +28,7 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="classify">
         <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -72,7 +72,7 @@
                    <property name="geometry">
                     <rect>
                      <x>0</x>
-                     <y>-40</y>
+                     <y>0</y>
                      <width>289</width>
                      <height>310</height>
                     </rect>
@@ -601,7 +601,7 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>263</width>
+                     <width>199</width>
                      <height>108</height>
                     </rect>
                    </property>
@@ -640,7 +640,7 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>263</width>
+                     <width>257</width>
                      <height>231</height>
                     </rect>
                    </property>
@@ -915,15 +915,15 @@
                <item>
                 <widget class="QToolBox" name="toolBox_2">
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>1</number>
                  </property>
                  <widget class="QWidget" name="imageFrom3D">
                   <property name="geometry">
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>286</width>
-                    <height>268</height>
+                    <width>464</width>
+                    <height>414</height>
                    </rect>
                   </property>
                   <attribute name="label">
@@ -1040,24 +1040,101 @@
                    <item>
                     <widget class="QPushButton" name="prepareFrom3D_pushButton">
                      <property name="text">
-                      <string>Prepare</string>
+                      <string>Get projections</string>
                      </property>
                     </widget>
                    </item>
                   </layout>
                  </widget>
-                 <widget class="QWidget" name="page_2">
+                 <widget class="QWidget" name="instancesFromScene">
                   <property name="geometry">
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>100</width>
-                    <height>30</height>
+                    <width>464</width>
+                    <height>414</height>
                    </rect>
                   </property>
                   <attribute name="label">
-                   <string>Page 2</string>
+                   <string>Instances from scene of objects of one class</string>
                   </attribute>
+                  <layout class="QVBoxLayout" name="verticalLayout_21">
+                   <item>
+                    <layout class="QFormLayout" name="formLayout_10">
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="label_43">
+                       <property name="text">
+                        <string>Radius</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QDoubleSpinBox" name="prepareEuclideanCluSegRadius_doubleSpinBox">
+                       <property name="singleStep">
+                        <double>0.100000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>0.400000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_44">
+                       <property name="text">
+                        <string>Min. cluster size [pts]</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_45">
+                       <property name="text">
+                        <string>Max. cluster size [pts]</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QSpinBox" name="prepareEuclideanCluMinClusterSize_spinBox">
+                       <property name="maximum">
+                        <number>4000000</number>
+                       </property>
+                       <property name="value">
+                        <number>25</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QSpinBox" name="prepareEuclideanCluMaxClusterSize_spinBox">
+                       <property name="maximum">
+                        <number>200000000</number>
+                       </property>
+                       <property name="value">
+                        <number>4000000</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="QLabel" name="label_40">
+                       <property name="text">
+                        <string>classes ids/names (based on file parent folder name) to save (seperate by &quot;;&quot;) (leave empty for all)</string>
+                       </property>
+                       <property name="wordWrap">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="QLineEdit" name="prepareClsOfInterest_lineEdit"/>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="prepareExtractInstances_pushButton">
+                     <property name="text">
+                      <string>Extract instances and save to class folders</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </widget>
                 </widget>
                </item>
@@ -1141,12 +1218,15 @@
         </layout>
        </widget>
       </widget>
-      <widget class="QTextEdit" name="log_textEdit">
+      <widget class="QPlainTextEdit" name="log_plainTextEdit">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>1</verstretch>
         </sizepolicy>
+       </property>
+       <property name="maximumBlockCount">
+        <number>1000</number>
        </property>
       </widget>
      </widget>

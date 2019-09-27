@@ -1,5 +1,3 @@
-prepareTotalProj_spinBox_18 500
-prepareNumOfVertViews_spinBox_19 2
 decimation_twoStep_spinBox_2 5
 EuclideanCluMinClusterSize_spinBox 50
 EuclideanCluMaxClusterSize_spinBox_2 4000000
@@ -11,10 +9,10 @@ editProjKernelHeight_spinBox_10 3
 n_proj_spinBox_6 36
 n_h_proj_spinBox_8 1
 numberOfClasses_spinBox_17 5
-prepareHorStartDeg_doubleSpinBox_11 0
-prepareHorEndDeg_doubleSpinBox_12 350
-prepareVertStartDeg_doubleSpinBox_13 0
-prepareVertEndDeg_doubleSpinBox_14 45
+prepareTotalProj_spinBox_18 500
+prepareNumOfVertViews_spinBox_19 2
+prepareEuclideanCluMinClusterSize_spinBox 25
+prepareEuclideanCluMaxClusterSize_spinBox 4000000
 scale1_twoStep_doubleSpinBox_5 5
 scale2_twoStep_doubleSpinBox_6 50
 threshold_twoStep_doubleSpinBox_7 0.3
@@ -34,16 +32,21 @@ min_deg_doubleSpinBox_3 0
 max_deg_doubleSpinBox_4 350
 min_h_doubleSpinBox_5 0
 max_h_doubleSpinBox_7 0
+prepareHorStartDeg_doubleSpinBox_11 0
+prepareHorEndDeg_doubleSpinBox_12 350
+prepareVertStartDeg_doubleSpinBox_13 0
+prepareVertEndDeg_doubleSpinBox_14 45
+prepareEuclideanCluSegRadius_doubleSpinBox 0.4
 memoryLimit_doubleSpinBox 10000
 approx_twoStep_checkBox_2 true
 approx_checkBox true
 orientedBB_checkBox false
 dontClassify_checkBox false
-preparedImageType_comboBox 0
 segmentation_comboBox 0
 projection_comboBox 0
 editProjKernelShape_comboBox 0
 benchmark_comboBox 0
+preparedImageType_comboBox 0
 qt_spinbox_lineedit 
 projectionSaveFolder_lineEdit 
 classificationModel_lineEdit ../trained_models/CNN_binary_3D_Map_person_1

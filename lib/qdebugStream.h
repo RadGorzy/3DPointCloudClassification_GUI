@@ -5,7 +5,7 @@
 #include <streambuf>
 #include <string>
 #include <QScrollBar>
-#include "QTextEdit"
+#include "QPlainTextEdit"
 #include "QDateTime"
 
 // MessageHandler
@@ -14,16 +14,16 @@ class MessageHandler : public QObject
 {
     Q_OBJECT
     public :
-        MessageHandler(QTextEdit *textEdit, QObject * parent = Q_NULLPTR) : QObject(parent), m_textEdit(textEdit){}
+        MessageHandler(QPlainTextEdit *textEdit, QObject * parent = Q_NULLPTR) : QObject(parent), m_textEdit(textEdit){}
 
     public slots:
         void catchMessage(QString msg)
         {
-           this->m_textEdit->append(msg);
+           this->m_textEdit->appendPlainText(msg);
         }
         /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
     private:
-        QTextEdit * m_textEdit;
+        QPlainTextEdit * m_textEdit;
 };
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 

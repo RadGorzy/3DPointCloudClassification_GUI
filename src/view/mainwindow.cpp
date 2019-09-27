@@ -18,9 +18,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // Set up ThreadLogStream, which redirect cout to signal sendLogString
     // Set up  MessageHandler,  wgucg catch message from sendLogString and Display
     /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    /*
     m_qd = new ThreadLogStream(std::cout); //Redirect Console output to QTextEdit
-    this->msgHandler = new MessageHandler(this->ui->log_textEdit, this);
+    this->msgHandler = new MessageHandler(this->ui->log_plainTextEdit, this);
     connect(m_qd, &ThreadLogStream::sendLogString, msgHandler, &MessageHandler::catchMessage);
+    */
     /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
     //initilizes satcked widgets with apropriate initial tab
@@ -68,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect(ui->treeWidget,SIGNAL(itemSelectionChanged()),this, SLOT(tescik()));
     //prepare tab:
     connect(ui->prepareFrom3D_pushButton,SIGNAL(clicked()),this, SLOT(prepareFrom3D()));
+    connect(ui->prepareExtractInstances_pushButton,SIGNAL(clicked()),this, SLOT(extractObjectsInstances()));
 
 
     /*
@@ -550,6 +553,38 @@ void MainWindow::prepareFrom3D(){
 
     std::shared_ptr<PrepareDatasetFrom3D> prepareDatasetType=getPrepareDatasetFrom3DType();
     this->threadController->prepareFrom3D(this->prepareDatasetController,prepareDatasetType);
+}
+//EXTRACT single instances
+/**
+ * @brief MainWindow::getClassesIDsToExtract, Optionaly set what classes we want to take into account (based on clouds parent folders names),
+ *  if user doesn give any classes (empty "prepareClsOfInterest_lineEdit") all cloud files will be taken into account
+ * classes should be seperated by ";" in "prepareClsOfInterest_lineEdit"
+ * @return
+ */
+std::vector<std::string> MainWindow::getClassesIDsToExtract(){
+    QStringList qSList= this->ui->prepareClsOfInterest_lineEdit->text().split(";",QString::SkipEmptyParts);
+    std::vector<std::string> vecOfStr={};
+    for(auto &element:qSList){
+        vecOfStr.push_back(element.toStdString());
+    }
+    return vecOfStr;
+}
+std::shared_ptr<ExtractObjectsInstances> MainWindow::getExtractInstancesType(){
+    std::shared_ptr<SegmentationType> sType=std::make_shared<EuclideanClustering>(/*segRadius*/ui->prepareEuclideanCluSegRadius_doubleSpinBox->value()
+                                                                                  ,/*minClusterSize*/ui->prepareEuclideanCluMinClusterSize_spinBox->value()
+                                                                                  ,/*maxClusterSize*/ui->prepareEuclideanCluMaxClusterSize_spinBox->value());
+    std::shared_ptr<ExtractObjectsInstances> extractObjectsInstancesType = std::make_shared<ExtractObjectsInstances>(
+                /*segmentation type = euclidean clustering*/sType,
+                /*source path ->default value ->actual value is set in "prepareDatasetController" when user
+                 * has chosen item in  prepare qTreeWidget*/"",
+                /*destination path ->default value -> -||-*/"");
+    extractObjectsInstancesType->setClassesOfInterest(getClassesIDsToExtract()); //optionaly set what classes we want to take into account (based on clouds parent folder name)
+    return extractObjectsInstancesType;
+}
+
+void MainWindow::extractObjectsInstances(){
+    std::shared_ptr<ExtractObjectsInstances> extractObjectsInstancesType = getExtractInstancesType();
+    this->threadController->extractObjectsInstances(this->prepareDatasetController,extractObjectsInstancesType);
 }
 void MainWindow::treeCustomMenu(const QPoint & pos)
 {

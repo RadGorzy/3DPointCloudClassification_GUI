@@ -17,3 +17,14 @@ void PrepareDatasetController::prepare(std::shared_ptr<PrepareDatasetFrom3D> pre
         updateView(item,"finished");
     }
 }
+
+void PrepareDatasetController::extract(std::shared_ptr<ExtractObjectsInstances> extractObjectsInstances){
+    QList<QTreeWidgetItem*> selectedItems = this->treeWidget->selectedItems();
+    for (auto item:selectedItems){
+        updateView(item,"processing ...");
+        extractObjectsInstances->setInPath(item->text(this->srcPathColumn).toStdString());
+        extractObjectsInstances->setOutPath(item->text(this->dstPathColumn).toStdString());
+        extractObjectsInstances->extract();
+        updateView(item,"finished");
+    }
+}

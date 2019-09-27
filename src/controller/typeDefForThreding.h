@@ -20,6 +20,7 @@ class EditType;
 class BenchmarkType;
 class PrepareDatasetController;
 class PrepareDatasetFrom3D;
+class ExtractObjectsInstances;
 
 typedef std::shared_ptr<PointCloudController> cloudControllerSharedPtr;
 typedef QList<QTreeWidgetItem*> listOfTreeWidgetItemRawPtr;
@@ -35,6 +36,7 @@ typedef int integer;
 
 typedef std::shared_ptr<PrepareDatasetController> prepareDatasetControllerSharedPtr;
 typedef std::shared_ptr<PrepareDatasetFrom3D> prepareDatasetFrom3DSharedPtr;
+typedef std::shared_ptr<ExtractObjectsInstances> extractObjectsInstancesSharedPtr;
 //we have to Q_DECLARE_METATYPE(type)  before calling qRegisterMetaType<>() (https://doc.qt.io/qt-5/qmetatype.html#qRegisterMetaType-1)
 Q_DECLARE_METATYPE(cloudControllerSharedPtr);
 Q_DECLARE_METATYPE(listOfTreeWidgetItemRawPtr);
@@ -48,4 +50,5 @@ Q_DECLARE_METATYPE(integer);
 
 Q_DECLARE_METATYPE(prepareDatasetControllerSharedPtr);
 Q_DECLARE_METATYPE(prepareDatasetFrom3DSharedPtr);
+Q_DECLARE_METATYPE(extractObjectsInstancesSharedPtr);
 #endif // TYPEDEFFORTHREDING_H

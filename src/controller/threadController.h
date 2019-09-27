@@ -23,6 +23,7 @@ public slots:
                   ,stdString modelPath,integer numOfClasses);
     void benchmark(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,benchmarkTypeSharedPtr benchmarkType, stdString folderPath);
     void prepareFrom3D(const prepareDatasetControllerSharedPtr controller,prepareDatasetFrom3DSharedPtr prepareDatasetFrom3D);
+    void extractObjectsInstances(const prepareDatasetControllerSharedPtr controller,extractObjectsInstancesSharedPtr extractObjectsInstances);
 signals:
     void resultReady(const QString &result);
 };
@@ -46,6 +47,7 @@ signals:
                   ,stdString modelPath,integer numOfClasses);
     void benchmark(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,benchmarkTypeSharedPtr benchmarkType, stdString folderPath);
     void prepareFrom3D(const prepareDatasetControllerSharedPtr controller, prepareDatasetFrom3DSharedPtr prepareDatasetFrom3D);
+    void extractObjectsInstances(const prepareDatasetControllerSharedPtr controller,extractObjectsInstancesSharedPtr extractObjectsInstances);
 };
 
 #endif // THREADCONTROLLER_H

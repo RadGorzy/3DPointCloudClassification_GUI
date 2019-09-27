@@ -120,6 +120,7 @@ public slots: //if we use connect (old style SLOT and SIGNAL) we have to declare
     void classify();
     void benchmark();
     void prepareFrom3D();
+    void extractObjectsInstances();
 
 
 private:
@@ -159,6 +160,8 @@ private:
     std::shared_ptr<BenchmarkType> getBenchmarkType();
 
     std::shared_ptr<PrepareDatasetFrom3D> getPrepareDatasetFrom3DType();
+    std::shared_ptr<ExtractObjectsInstances> getExtractInstancesType();
+    std::vector<std::string> getClassesIDsToExtract();
 
     std::unique_ptr<MemorySettings> memorySettings;
 
