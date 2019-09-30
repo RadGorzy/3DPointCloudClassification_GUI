@@ -40,12 +40,12 @@ void ProjectionType::setParameters(double min_deg, double max_deg, int n, double
 }
 void ProjectionType::calculateStep() {
     if(projParam.n>=2)
-        step=(projParam.max_deg-projParam.min_deg)/ static_cast<double>(projParam.n-1);
+        step=(projParam.max_deg-projParam.min_deg)/ static_cast<double>(projParam.n);
     else
         step=0;  //czyli jak n=1 to robimy tylko rzut dla h=min_h
 
     if(projParam.n_h>=2)
-        step_h=(projParam.max_h-projParam.min_h)/ static_cast<double>(projParam.n_h-1);
+        step_h=(projParam.max_h-projParam.min_h)/ static_cast<double>(projParam.n_h);
     else
         step_h=0;
 }
