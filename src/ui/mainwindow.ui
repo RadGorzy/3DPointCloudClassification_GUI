@@ -915,7 +915,7 @@
                <item>
                 <widget class="QToolBox" name="toolBox_2">
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="imageFrom3D">
                   <property name="geometry">
@@ -956,7 +956,7 @@
                      <item row="0" column="1">
                       <widget class="QSpinBox" name="prepareTotalProj_spinBox_18">
                        <property name="maximum">
-                        <number>1000000</number>
+                        <number>10000000</number>
                        </property>
                       </widget>
                      </item>

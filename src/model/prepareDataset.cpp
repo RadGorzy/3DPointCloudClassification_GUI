@@ -206,7 +206,11 @@ void PrepareRangeImages::prepare(std::string SRC_PATH, std::string PROJECTIONS_P
     int num_of_class_obj=fnames.size(); //total number of objects
 
     n_horizontal=calculateNumberOfProjections(num_of_class_obj);
-    projection=std::make_shared<RangeImageProjection>(START_DEGREE,END_DEGREE , n_horizontal, START_v, END_v,N_v);//# to tez ewentualnie moze byc tworzone raz w konstruktorze, a tutaj mozna uzywac tylko funkcji projection->setParameters()
+    //projection=std::make_shared<RangeImageProjection>(START_DEGREE,END_DEGREE , n_horizontal, START_v, END_v,N_v);//# to tez ewentualnie moze byc tworzone raz w konstruktorze, a tutaj mozna uzywac tylko funkcji projection->setParameters()
+    //the line above causes error:http://eigen.tuxfamily.org/dox-devel/group__TopicUnalignedArrayAssert.html -> cause 1 (Structures (here "RangeImageProjection") having Eigen objects as members
+    //solution with EIGEN_MAKE_ALIGNED_OPERATOR_NEW, put as public attribute in structure works only when later we use new operator while creating this object
+    //thats why this lower initialization method is used (which unfortunately is slower):
+    std::shared_ptr<RangeImageProjection> projection(new RangeImageProjection(START_DEGREE,END_DEGREE , n_horizontal, START_v, END_v,N_v));
     int i=0;
 
     for (const auto &file:fnames)
