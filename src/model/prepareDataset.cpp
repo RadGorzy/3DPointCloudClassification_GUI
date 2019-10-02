@@ -210,7 +210,8 @@ void PrepareRangeImages::prepare(std::string SRC_PATH, std::string PROJECTIONS_P
     //the line above causes error:http://eigen.tuxfamily.org/dox-devel/group__TopicUnalignedArrayAssert.html -> cause 1 (Structures (here "RangeImageProjection") having Eigen objects as members
     //solution with EIGEN_MAKE_ALIGNED_OPERATOR_NEW, put as public attribute in structure works only when later we use new operator while creating this object
     //thats why this lower initialization method is used (which unfortunately is slower):
-    std::shared_ptr<RangeImageProjection> projection(new RangeImageProjection(START_DEGREE,END_DEGREE , n_horizontal, START_v, END_v,N_v));
+    std::shared_ptr<RangeImageProjection> projection_(new RangeImageProjection(START_DEGREE,END_DEGREE , n_horizontal, START_v, END_v,N_v));
+    this->projection=projection_; //now asssign it to appropriate PrepareDatasetFrom3D's member
     int i=0;
 
     for (const auto &file:fnames)

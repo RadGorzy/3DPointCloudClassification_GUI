@@ -11,6 +11,7 @@
 #include <arpa/inet.h>//->? do ntohl w funkcji get_image_dimensions
 #include <vector>
 #include <dirent.h>// do listowania plikow
+#include <sys/stat.h>
 #include <sstream>
 #include <iomanip>
 
@@ -94,6 +95,7 @@ inline void list_dir(std::vector<std::string> &results,std::string curr_director
     DIR* dir_point = opendir(curr_directory.c_str());
     if(dir_point!=nullptr){
         dirent* entry = readdir(dir_point);
+        struct stat sb;
         while (entry){									// if !entry then end of directory
             if (entry->d_type == DT_DIR){				// if entry is a directory
                 if(files_or_folders==1)
@@ -123,6 +125,39 @@ inline void list_dir(std::vector<std::string> &results,std::string curr_director
                 }
                 else if(files_or_folders==2)
                     std::cout<<entry->d_name<<" is a file, skipping"<<std::endl;
+            }
+            else if (entry->d_type == DT_UNKNOWN){ //unkonwn probalby because of unsupported filesystem by "entry->d_type" :https://stackoverflow.com/questions/47078417/readdir-returning-dirent-with-d-type-dt-unknown-for-directories-and
+                //std::cout<<"UNKNOWN ENTRY TYPE, USIN lstat()"<<std::endl;
+                if(lstat((curr_directory+"/"+entry->d_name).c_str(),&sb)!=-1){
+                    if(S_ISREG(sb.st_mode)!=0){ //is it a REGULAR FILE?
+                        if(files_or_folders==1)
+                        {
+                            std::string fname = entry->d_name;	// filename
+                            // if filename's last characters are extension
+                            if (fname.find(extension, (fname.length() - extension.length())) != std::string::npos) {
+                                if (remove_extension) {
+                                    fname = fname.substr(0, fname.length() - extension.length());
+                                }
+                                results.push_back(fname);        // add filename to results vector
+                            } else
+                                std::cout<<"File "<<fname<<" doesnt have apporpriate extension ( "<<extension<<" ) , skipping"<<std::endl;
+                        }
+                        else if(files_or_folders==2)
+                            std::cout<<entry->d_name<<" is a file, skipping"<<std::endl;
+                    }else if (S_ISDIR(sb.st_mode)!=0){ //DIRECTORY?
+                        if(files_or_folders==1)
+                            std::cout<<entry->d_name<<" is directory, skipping"<<std::endl;
+                        else if(files_or_folders==2){
+                            std::string fname = entry->d_name;
+                            if (fname != "." && fname != "..")
+                            {
+                                results.push_back(fname);
+                            }
+                        }
+                    }
+                }else{
+                    std::cout<<"could not lstat() "<<curr_directory+"/"+entry->d_name<<std::endl;
+                }
             }
 
             entry = readdir(dir_point);
