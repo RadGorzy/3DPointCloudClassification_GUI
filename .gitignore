@@ -6,3 +6,5 @@ build/
 deploymentCommands
 releases/
 bin/
+benchmark/saved_clouds
+embedded_python/__pycache__
