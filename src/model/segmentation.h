@@ -29,7 +29,7 @@ private:
     bool SAVE=false;
 public:
     DONSegmentation(double scale1=0.4,double scale2=4, double threshold=0.25,double segradius=0.4,bool approx=1,double decimation=5,bool TWO_STEP_SEGMENTATION=0, double scale1_1=0.8, double scale2_1=8);
-    std::vector<pcl::PointCloud<pcl::PointNormal>::Ptr> calculateDONAndFilter(pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud);
+    std::vector<pcl::PointCloud<pcl::PointNormal>::Ptr> calculateDONAndFilter(pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud,double scale1_,double scale2_);
     void cluster();
     std::vector<pcl::PointCloud<pcl::PointXYZ>::Ptr>  segment(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
     pcl::PointCloud<pcl::PointNormal> getDonCloud();

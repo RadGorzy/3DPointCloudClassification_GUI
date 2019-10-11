@@ -247,7 +247,7 @@ std::shared_ptr<SegmentationType> MainWindow::getSegmentationType(){
                                                              ,/*decimation*/ ui->decimation_spinBox->value()
                                                              ,/*TWO_STEP_SEGMENTATION*/false
                                                              ,/*scale1_1*/ui->scale1_1_twoStep_doubleSpinBox_9->value()
-                                                             ,/*scale2_1*/ui->scale2_twoStep_doubleSpinBox_6->value());
+                                                             ,/*scale2_1*/ui->scale2_1_twoStep_doubleSpinBox_10->value());
         break;
     }
     //two step segmentation
@@ -261,7 +261,7 @@ std::shared_ptr<SegmentationType> MainWindow::getSegmentationType(){
                                                              ,/*decimation*/ ui->decimation_twoStep_spinBox_2->value()
                                                              ,/*TWO_STEP_SEGMENTATION*/true
                                                              ,/*scale1_1*/ui->scale1_1_twoStep_doubleSpinBox_9->value()
-                                                             ,/*scale2_1*/ui->scale2_twoStep_doubleSpinBox_6->value());
+                                                             ,/*scale2_1*/ui->scale2_1_twoStep_doubleSpinBox_10->value());
         break;
     }
     //just euclidean cluster extraction

@@ -21,8 +21,13 @@ std::vector<pcl::PointCloud<pcl::PointXYZ>::Ptr>  SegmentationType::segment(pcl:
 pcl::PointCloud<pcl::PointNormal> SegmentationType::getDonCloud(){throw std::runtime_error ("Operation not supported for this SegmentationType class");}
 
 DONSegmentation::DONSegmentation(double scale1,double scale2, double threshold,double segradius,bool approx,double decimation,bool TWO_STEP_SEGMENTATION, double scale1_1, double scale2_1)
-:scale1(scale1),scale2(scale2),threshold(threshold),segradius(segradius),approx(approx),decimation(decimation),TWO_STEP_SEGMENTATION(TWO_STEP_SEGMENTATION),scale1_1(scale1_1),scale2_1(scale2_1){}
-std::vector<pcl::PointCloud<pcl::PointNormal>::Ptr> DONSegmentation::calculateDONAndFilter(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_) {
+:scale1(scale1),scale2(scale2),threshold(threshold),segradius(segradius),approx(approx),decimation(decimation),TWO_STEP_SEGMENTATION(TWO_STEP_SEGMENTATION),scale1_1(scale1_1),scale2_1(scale2_1)
+{
+
+    //pcl::PointCloud<pcl::PointNormal>::Ptr doncloudInst(new pcl::PointCloud<pcl::PointNormal>);
+    //this->doncloud=doncloudInst; //CANNOT DO THAT- causes bad segmantation results
+}
+std::vector<pcl::PointCloud<pcl::PointNormal>::Ptr> DONSegmentation::calculateDONAndFilter(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_,double scale1_,double scale2_) {
     std::cout << "Segmenting Pointcloud with " << cloud_->points.size () << " data points." << std::endl;
     std::vector<pcl::PointCloud<pcl::PointNormal>::Ptr> filtred_and_removed;//filtred_and_removed[0]- fragment chmury spelniajacy warunek filtracji (don>=threshold)
     //filtred_and_removed[0]-pozostaly fragment chmury (usuniety w wyniku filtracji)
@@ -55,7 +60,7 @@ std::vector<pcl::PointCloud<pcl::PointNormal>::Ptr> DONSegmentation::calculateDO
 
         // Create downsampled point cloud for DoN NN search with small scale
         small_cloud_downsampled = pcl::PointCloud<pcl::PointXYZ>::Ptr(new pcl::PointCloud<pcl::PointXYZ>);
-        float smalldownsample = static_cast<float> (scale1 / decimation);
+        float smalldownsample = static_cast<float> (scale1_ / decimation);
         //Eigen::Vector3f leafsize= sor.getLeafSize();
         sor.setLeafSize (smalldownsample, smalldownsample, smalldownsample);
         sor.filter (*small_cloud_downsampled);
@@ -63,7 +68,7 @@ std::vector<pcl::PointCloud<pcl::PointNormal>::Ptr> DONSegmentation::calculateDO
 
         // Create downsampled point cloud for DoN NN search with large scale
         large_cloud_downsampled = pcl::PointCloud<pcl::PointXYZ>::Ptr(new pcl::PointCloud<pcl::PointXYZ>);
-        float largedownsample = float (scale2/decimation);
+        float largedownsample = float (scale2_/decimation);
         sor.setLeafSize (largedownsample, largedownsample, largedownsample);
         sor.filter (*large_cloud_downsampled);
 
@@ -94,7 +99,7 @@ std::vector<pcl::PointCloud<pcl::PointNormal>::Ptr> DONSegmentation::calculateDO
 
 
 
-    if (scale1 >= scale2)
+    if (scale1_ >= scale2_)
     {
         std::cerr << "Error: Large scale must be > small scale!" << std::endl;
         exit (EXIT_FAILURE);
@@ -111,31 +116,31 @@ std::vector<pcl::PointCloud<pcl::PointNormal>::Ptr> DONSegmentation::calculateDO
      */
     ne.setViewPoint (std::numeric_limits<float>::max (), std::numeric_limits<float>::max (), std::numeric_limits<float>::max ());
     /**/
-    if(scale1 >= scale2){
+    if(scale1_ >= scale2_){
         std::cerr << "Error: Large scale must be > small scale!" << std::endl;
         exit(EXIT_FAILURE);
     }
 
     // calculate normals with the small scale
-    std::cout << "Calculating normals for scale..." << scale1 << std::endl;
+    std::cout << "Calculating normals for scale..." << scale1_ << std::endl;
     pcl::PointCloud<pcl::PointNormal>::Ptr normals_small_scale (new pcl::PointCloud<pcl::PointNormal>);
 
     if(approx){
         ne.setSearchSurface(small_cloud_downsampled);
     }
 
-    ne.setRadiusSearch (scale1);
+    ne.setRadiusSearch (scale1_);
     ne.compute (*normals_small_scale);
 
     // calculate normals with the large scale
-    std::cout << "Calculating normals for scale..." << scale2 << std::endl;
+    std::cout << "Calculating normals for scale..." << scale2_ << std::endl;
     pcl::PointCloud<pcl::PointNormal>::Ptr normals_large_scale (new pcl::PointCloud<pcl::PointNormal>);
 
     if(approx){
         ne.setSearchSurface(large_cloud_downsampled);
     }
 
-    ne.setRadiusSearch (scale2);
+    ne.setRadiusSearch (scale2_);
     ne.compute (*normals_large_scale);
 
     if(VISUALIZE_NORMALS)
@@ -288,7 +293,7 @@ std::vector<pcl::PointCloud<pcl::PointXYZ>::Ptr>  DONSegmentation::segment(pcl::
     //filtred_and_removed[0]-pozostaly fragment chmury (usuniety w wyniku filtracji)
     pcl::PointCloud<pcl::PointNormal>::Ptr doncloud1;
 
-    filtred_and_removed=calculateDONAndFilter(this->cloud);
+    filtred_and_removed=calculateDONAndFilter(this->cloud,this->scale1,this->scale2);
     doncloud1=filtred_and_removed[0];
     if(TWO_STEP_SEGMENTATION) //filtrujemy usuniety wczesniej fragment chmury (czylu najpierw wydobywamy duze obiekty - np. budynki), nastepnie tutaj segmentujemy pozostala czesc (zawierajaca juz np. tylko podloze i male obiekty)
     {
@@ -299,13 +304,12 @@ std::vector<pcl::PointCloud<pcl::PointXYZ>::Ptr>  DONSegmentation::segment(pcl::
         pcl::PointCloud<pcl::PointXYZ>::Ptr removed_xyz (new pcl::PointCloud<pcl::PointXYZ>);
         removed=filtred_and_removed[1];
         copyPointCloud(*removed, *removed_xyz);
-        filtred_and_removed1=calculateDONAndFilter(removed_xyz);
+        filtred_and_removed1=calculateDONAndFilter(removed_xyz,this->scale1_1,this->scale2_1);
         doncloud2=filtred_and_removed1[0];
         std::cout<<"SUMMING CLOUDS"<<std::endl;
-        *doncloud=*doncloud1+*doncloud2;
+        *doncloud1+=*doncloud2; //*doncloud=*doncloud1+*doncloud2 -> ERROR HERE, because doncloud is not instaniatet here
     }
-    else
-        doncloud=doncloud1;
+    doncloud=doncloud1;
 
     cluster(); //acquire clusterIndices
     //create clouds from clusterIndices:
