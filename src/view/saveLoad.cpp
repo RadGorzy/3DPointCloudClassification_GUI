@@ -56,16 +56,16 @@ std::string SaveLoad::saveSingleCloud(CloudComponent *cloud,QString saveFolderPa
     if(saveParentScenes){
         if(cloud->getCloudType()==type_CloudObject){
             //evaluation of CONDITIONS TO SAVE CLOUD  - WE DO IT ONLY FOR OBJECTS
-            if(saveCond!=nullptr){
+            if(saveCond->getNumberOfConditions()>0){
                 if(saveCond->evaluateConditions(cloud)){
-                    cloud->saveCloud(FILEPATH);
+                    cloud->saveCloud(saveFolderPath.toStdString());
 
                     line<<cloud->getCloudType()<<separator<<cloud->getName()<<separator<<FILEPATH<<separator<<cloud->getParentSceneName()<<separator
                     <</*parent source path is now in saveFolderPath*/newParentFILEPATH
                     <<separator<<cloud->getCloudID()<<separator<<cloud->getCloudClassID()<<separator<<vectorToString(cloud->getNNResopneVector(),vectorSeparator);
                 }
             }else{
-                cloud->saveCloud(FILEPATH);
+                cloud->saveCloud(saveFolderPath.toStdString());
 
                 line<<cloud->getCloudType()<<separator<<cloud->getName()<<separator<<FILEPATH<<separator<<cloud->getParentSceneName()<<separator
                 <</*parent source path is now in saveFolderPath*/newParentFILEPATH
@@ -74,7 +74,7 @@ std::string SaveLoad::saveSingleCloud(CloudComponent *cloud,QString saveFolderPa
 
 
         }else if(cloud->getCloudType()==type_CloudScene){
-            cloud->saveCloud(FILEPATH);
+            cloud->saveCloud(saveFolderPath.toStdString());
 
             line<<cloud->getCloudType()<<separator<<cloud->getName()<<separator<<FILEPATH<<separator<<cloud->getParentSceneName()<<separator<<cloud->getParentSourcePath()
                 <<separator<<cloud->getCloudID()
@@ -85,15 +85,15 @@ std::string SaveLoad::saveSingleCloud(CloudComponent *cloud,QString saveFolderPa
     }else{
         if(cloud->getCloudType()==type_CloudObject){
             //evaluation of CONDITIONS TO SAVE CLOUD  - WE DO IT ONLY FOR OBJECTS
-            if(saveCond!=nullptr){
+            if(saveCond->getNumberOfConditions()>0){
                 if(saveCond->evaluateConditions(cloud)){
-                    cloud->saveCloud(FILEPATH);
+                    cloud->saveCloud(saveFolderPath.toStdString());
 
                     line<<cloud->getCloudType()<<separator<<cloud->getName()<<separator<<FILEPATH<<separator<<cloud->getParentSceneName()<<separator<<cloud->getParentSourcePath()
                        <<separator<<cloud->getCloudID()<<separator<<cloud->getCloudClassID()<<separator<<vectorToString(cloud->getNNResopneVector(),vectorSeparator);
                 }
             }else{
-                cloud->saveCloud(FILEPATH);
+                cloud->saveCloud(saveFolderPath.toStdString());
 
                 line<<cloud->getCloudType()<<separator<<cloud->getName()<<separator<<FILEPATH<<separator<<cloud->getParentSceneName()<<separator<<cloud->getParentSourcePath()
                    <<separator<<cloud->getCloudID()<<separator<<cloud->getCloudClassID()<<separator<<vectorToString(cloud->getNNResopneVector(),vectorSeparator);
@@ -116,7 +116,7 @@ std::string SaveLoad::saveSingleCloud(CloudComponent *cloud,QString saveFolderPa
  *                                             if indexesToSave[i].at(0)==-std::numeric_limits::max -> topLevelCloud or its children were not selected
  * @return
  */
-bool SaveLoad::save(QString saveFolderPath,const std::vector<std::unique_ptr<CloudComponent> > &cloudConrtainer, const std::vector<std::vector<int> > &indexesToSave,bool saveParentScenes,std::shared_ptr<SaveConditions> saveCond){
+bool SaveLoad::save(QString saveFolderPath,const std::vector<std::unique_ptr<CloudComponent> > &cloudConrtainer, const std::vector<std::vector<int> > &indexesToSave,std::shared_ptr<SaveConditions> saveCond){
     int i=-1;
     int j=0;
     bool cloudWasSelected=false;
@@ -142,7 +142,7 @@ bool SaveLoad::save(QString saveFolderPath,const std::vector<std::unique_ptr<Clo
             //save or not TopLevel Cloud (top parent)
             cloud=cloudConrtainer.at(i)->getCloud();
             if(cloud!=nullptr){
-                line=saveSingleCloud(cloud,saveFolderPath,saveParentScenes,saveCond);
+                line=saveSingleCloud(cloud,saveFolderPath,saveCond->getSaveParentScene(),saveCond);
             }
             if(line!=""){saveVector.push_back(line);}
             //save children
@@ -150,7 +150,7 @@ bool SaveLoad::save(QString saveFolderPath,const std::vector<std::unique_ptr<Clo
                 line="";
                 cloud=cloudConrtainer.at(i)->getCloud(childIndex);
                 if(cloud!=nullptr){ 
-                    line=saveSingleCloud(cloud,saveFolderPath,saveParentScenes,saveCond);
+                    line=saveSingleCloud(cloud,saveFolderPath,saveCond->getSaveParentScene(),saveCond);
                     if(line!=""){saveVector.push_back(line);}
                 }
             }
@@ -314,4 +314,9 @@ bool SaveConditions::evaluateConditions(CloudComponent* cloud){
 size_t SaveConditions::getNumberOfConditions(){
     return this->cloudConditions.size();
 }
-
+void SaveConditions::setSaveParentScene(bool save){
+    this->saveParentScene=save;
+}
+bool SaveConditions::getSaveParentScene(){
+    return this->saveParentScene;
+}

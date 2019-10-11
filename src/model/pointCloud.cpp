@@ -453,7 +453,7 @@ void CloudScene::visualize(std::shared_ptr<VisualizationType> vTyp,int object_id
 }
 void CloudScene::saveCloud(std::string FILEPATH){
     std::cout<<"Saving "<<FILEPATH+"/"+name<<" cloud scene"<<std::endl;
-    pcl::io::savePCDFileASCII (FILEPATH, *cloud);
+    pcl::io::savePCDFileASCII (FILEPATH+"/"+name, *cloud);
 }
 void CloudScene::saveClouds(std::string FILEPATH){ //->? zapisuje wszystkie obiekty (nie sceny) dodaj jeszcze ewentualnie funkcje do zapisu scene oraz zapisu konkretnych scen i obiektow
     for(int i=0; i<clouds.size();++i){

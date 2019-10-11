@@ -33,7 +33,17 @@ void SaveSettings::on_save_pushButton_clicked()
     if(this->ui->cloudSize_spinBox->value()>0){
         addCondition(std::bind(&SaveSettings::hasNumOfPointsBiggerEqualThan, this, std::placeholders::_1));
     }
-    accept();
+    if(this->ui->saveParentScene_checkBox->isChecked()){
+        this->saveConditions->setSaveParentScene(true);
+    }else{
+        this->saveConditions->setSaveParentScene(false);
+    }
+    if(this->savePath!=""){
+        accept();
+    }else{
+        reject();
+    }
+
 }
 QStringList SaveSettings::getClassesIDs(){
     return this->ui->clsIDs_lineEdit->text().split(classesSeparator,QString::SkipEmptyParts);
@@ -48,14 +58,7 @@ void SaveSettings::addCondition(std::function<bool(CloudComponent*)> condition){
     this->saveConditions->addCondition(condition);
 }
 std::shared_ptr<SaveConditions> SaveSettings::getSaveConditions(){
-    if(this->saveConditions->getNumberOfConditions()>0){
-        return this->saveConditions;
-    }
-    //if no conditions were added we pass nullptr to let the caller know that there's no need for conditions evaluation
-    else
-    {
-        return nullptr;
-    }
+    return this->saveConditions;
 }
 //Conditions: //
 bool SaveSettings::isAmongClasses(CloudComponent *cloud){

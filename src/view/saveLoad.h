@@ -14,8 +14,6 @@ private:
     std::shared_ptr<CloudSceneFactory> sceneFactory;
     std::shared_ptr<CloudObjectFactory> objectFactory;
 
-    std::unique_ptr<SaveConditions> saveConditions=nullptr;
-
     std::string separator="\0"; //NULL character -> not allowed in path in unix and windows
     std::string vectorSeparator="_";
     bool saveTXT(QString path,const std::vector<std::string> saveVector);
@@ -27,7 +25,7 @@ public:
     SaveLoad();
     void setFactories(std::shared_ptr<CloudSceneFactory> scnFac,std::shared_ptr<CloudObjectFactory> objFac);
     void setSaveConditions(std::unique_ptr<SaveConditions> saveCond);
-    bool save(QString saveFolderPath, const std::vector<std::unique_ptr<CloudComponent>> &cloudConrtainer, const std::vector<std::vector<int> > &indexesToSave,bool saveParentScenes=false,std::shared_ptr<SaveConditions> saveCond=nullptr);
+    bool save(QString saveFolderPath, const std::vector<std::unique_ptr<CloudComponent>> &cloudConrtainer, const std::vector<std::vector<int> > &indexesToSave,std::shared_ptr<SaveConditions> saveCond=nullptr);
     bool load(QString path,std::vector<std::unique_ptr<CloudComponent> > &cloudConrtainer, std::shared_ptr<PointCloudController> controller,std::shared_ptr<CloudObjectFactory> objectFactory);
 };
 
@@ -38,11 +36,14 @@ private:
     std::vector<int> classesIDs;
     float minNnResponseStrength;
     uint minNumOfPoints;
+    bool saveParentScene=false;
 public:
     SaveConditions();
     void addCondition(std::function<bool(CloudComponent*)>);
     bool evaluateConditions(CloudComponent* cloud);
     size_t getNumberOfConditions();
+    void setSaveParentScene(bool save);
+    bool getSaveParentScene();
 
     //condition functions
 };

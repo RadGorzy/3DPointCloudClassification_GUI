@@ -28,7 +28,7 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="classify">
         <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -72,7 +72,7 @@
                    <property name="geometry">
                     <rect>
                      <x>0</x>
-                     <y>0</y>
+                     <y>-256</y>
                      <width>289</width>
                      <height>310</height>
                     </rect>
@@ -103,7 +103,7 @@
                     <item>
                      <widget class="QStackedWidget" name="segmentation_stackedWidget">
                       <property name="currentIndex">
-                       <number>2</number>
+                       <number>1</number>
                       </property>
                       <widget class="QWidget" name="DON_oneStep">
                        <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -472,7 +472,11 @@
                              </widget>
                             </item>
                             <item row="2" column="1">
-                             <widget class="QSpinBox" name="n_proj_spinBox_6"/>
+                             <widget class="QSpinBox" name="n_proj_spinBox_6">
+                              <property name="minimum">
+                               <number>1</number>
+                              </property>
+                             </widget>
                             </item>
                             <item row="3" column="0">
                              <widget class="QLabel" name="label_17">
@@ -496,7 +500,11 @@
                              </widget>
                             </item>
                             <item row="5" column="1">
-                             <widget class="QSpinBox" name="n_h_proj_spinBox_8"/>
+                             <widget class="QSpinBox" name="n_h_proj_spinBox_8">
+                              <property name="minimum">
+                               <number>1</number>
+                              </property>
+                             </widget>
                             </item>
                             <item row="0" column="1">
                              <widget class="QDoubleSpinBox" name="min_deg_doubleSpinBox_3"/>
@@ -550,7 +558,11 @@
                            </widget>
                           </item>
                           <item row="2" column="1">
-                           <widget class="QSpinBox" name="n_proj_rangeImg_spinBox_13"/>
+                           <widget class="QSpinBox" name="n_proj_rangeImg_spinBox_13">
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
+                           </widget>
                           </item>
                           <item row="3" column="0">
                            <widget class="QLabel" name="label_27">
@@ -574,19 +586,31 @@
                            </widget>
                           </item>
                           <item row="5" column="1">
-                           <widget class="QSpinBox" name="n_h_proj_rangeImg_spinBox_16"/>
+                           <widget class="QSpinBox" name="n_h_proj_rangeImg_spinBox_16">
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
+                           </widget>
                           </item>
                           <item row="0" column="1">
                            <widget class="QDoubleSpinBox" name="min_deg_rangeImg_doubleSpinBox_11"/>
                           </item>
                           <item row="1" column="1">
-                           <widget class="QDoubleSpinBox" name="max_deg_rangeImgdoubleSpinBox_12"/>
+                           <widget class="QDoubleSpinBox" name="max_deg_rangeImgdoubleSpinBox_12">
+                            <property name="maximum">
+                             <double>360.000000000000000</double>
+                            </property>
+                           </widget>
                           </item>
                           <item row="3" column="1">
                            <widget class="QDoubleSpinBox" name="min_h_rangeImgdoubleSpinBox_14"/>
                           </item>
                           <item row="4" column="1">
-                           <widget class="QDoubleSpinBox" name="max_h_rangeImg_doubleSpinBox_15"/>
+                           <widget class="QDoubleSpinBox" name="max_h_rangeImg_doubleSpinBox_15">
+                            <property name="maximum">
+                             <double>90.000000000000000</double>
+                            </property>
+                           </widget>
                           </item>
                          </layout>
                         </item>
@@ -601,7 +625,7 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>199</width>
+                     <width>281</width>
                      <height>108</height>
                     </rect>
                    </property>
@@ -640,7 +664,7 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>257</width>
+                     <width>281</width>
                      <height>231</height>
                     </rect>
                    </property>
@@ -922,8 +946,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>464</width>
-                    <height>414</height>
+                    <width>294</width>
+                    <height>268</height>
                    </rect>
                   </property>
                   <attribute name="label">
@@ -1051,8 +1075,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>464</width>
-                    <height>414</height>
+                    <width>310</width>
+                    <height>232</height>
                    </rect>
                   </property>
                   <attribute name="label">
