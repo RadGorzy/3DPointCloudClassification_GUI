@@ -23,6 +23,7 @@ Code is written in a way that allows easy extension of functionality.
 
 ### Dependency:
 	Tested with PCL 1.9,tensorflow-gpu 1.12.0, Qt 5.12 and VTK-8.2.0, python >=3.5 under ubuntu 18.04 and 16.04
+	Temporary use tensorflow 1.9 with "CNN_range_SemanticKITTI" and tensorflow >=1.10 for other models. 
 When using AppImage from releases, only these dependencies are required:
 ###     
 	python >= 3.5, tensorflow, numpy

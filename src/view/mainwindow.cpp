@@ -14,15 +14,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    qDebug()<<"URUCHOMILEM";
     // Set up ThreadLogStream, which redirect cout to signal sendLogString
     // Set up  MessageHandler,  wgucg catch message from sendLogString and Display
     /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    /*
+    //COMMENT OUT THESE THREE LINES BELOW IF YOU WANT TO HAVE MESSAGE OUTPUT TO CONSOLE//
     m_qd = new ThreadLogStream(std::cout); //Redirect Console output to QTextEdit
     this->msgHandler = new MessageHandler(this->ui->log_plainTextEdit, this);
     connect(m_qd, &ThreadLogStream::sendLogString, msgHandler, &MessageHandler::catchMessage);
-    */
+
     /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
     //initilizes satcked widgets with apropriate initial tab
@@ -101,7 +100,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //config->addWidget(this->ui->scale1_doubleSpinBox);
     config->addAllWidgetsOfGivenTypes({SpinBox,DoubleSpinBox,CheckBox,ComboBox,LineEdit,GroupBox});
     //# ponizsza linijka tylko do TESTOW, potem do USUNIECIA
-    this->config->loadConfiguration("../configurations/CNN_binary_Map_person_edited_3x3_KITTI.txt");
+    this->config->loadConfiguration("../configurations/CNN_range_SemanticKITTI_KITTI.txt");
 }
 
 MainWindow::~MainWindow()
