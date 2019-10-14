@@ -1,5 +1,7 @@
 import tensorflow as tf
 import numpy
+import os
+import imageio
 
 print("IM IN PYTHON ................")
 #to solve problem: https://github.com/google/oauth2client/issues/642
@@ -17,6 +19,7 @@ tf.app.flags.DEFINE_string('model_directory', './zapisane/CNN_range_3D_BIWI',   
 FLAGS = tf.app.flags.FLAGS
 
 def classify_multiple_projections_and_get_response_vector(test,modelDirectory,number_of_classes): #clasify single object based on its multiple projections
+    print("Tensorflow version " + tf.__version__)
     print("USING {} MODEL ".format(modelDirectory))
 
     with tf.Session() as sess:
@@ -26,7 +29,13 @@ def classify_multiple_projections_and_get_response_vector(test,modelDirectory,nu
 
         # Getting operations, tensors (graph elements, neural net model elements) from loaded graph
         # Its best to look for operation of interest on graphical representation of imported graph in Tensorboard: (for ex. in terminal: tensorboard --logdir=/home/radek/DeepLearning/CNN_binaryensorboard_train/CNN_5warstwKonw   ,and then in browser: http://localhost:6006  )
-        next_element_image = tf.get_default_graph().get_operation_by_name('IteratorGetNext').outputs[0]  # outputs[4] - gives next_element[4] - tensor to which we load labels - date saved in  next_element is defined in CreateData.py
+	#WARNING: since CNN_range_SemanticKITTI model I used in training module (RadGorzy/CNN_binary/CNN_binary_dataset.py) "next_element" name for operation that was previously called "IteratorGetNext"
+        # (next_element_variable didnt have then name argument in next_element = iterator.get_next() statement but now it has: next_element = iterator.get_next(name='next_element'))
+        # Given below if is for backward compability with 2 previously trained models in this repository ("CNN_binary_3D_Map_person_1" and "CNN_range_3D_BIWI")
+        if(os.path.basename(modelDirectory)=="CNN_binary_3D_Map_person_1" or os.path.basename(modelDirectory)=="CNN_range_3D_BIWI"):
+            next_element_image = tf.get_default_graph().get_operation_by_name('IteratorGetNext').outputs[0]  # outputs[4] - gives next_element[4] - tensor to which we load labels - date saved in  next_element is defined in CreateData.py
+        else:
+            next_element_image = tf.get_default_graph().get_operation_by_name('next_element').outputs[0]
         pkeep = tf.get_default_graph().get_operation_by_name('Placeholder_1').outputs[0]  #for tessting pkeep=1 (dropout parameter)
         Y = tf.get_default_graph().get_operation_by_name('Softmax').outputs[0]  # Y output layer (after softmax - vector of values [0-1] describing the belief that data belong to class represented by index of this vector
         # print(next_element_image)
