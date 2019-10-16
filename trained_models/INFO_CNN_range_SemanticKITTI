@@ -1,0 +1,56 @@
+TRAINING AND VALIDATION DATA is composed of projections extracted form semantically labeled point clouds downloaded from: http://www.semantic-kitti.org/dataset.html
+
+Checkpoint after 353000 and 354000 iterations and ConsoleOutput in chekpoints folder.
+Data composition:
+Instances for classes 50 (building), 71 (tree trunk) and 80 (pole) were extracted by me (3DPointCloudClassificaion_GUI -prepare tab).
+Classes 30 (person) and 10 (car) were already annoteted at the instance level. 
+
+Classes 30 and 10 I cut from all sequances folders and merged them in here. Name convention:
+ex. 02_000075_247 -> 02(sequence number)_000075(scene number within sequence)_247(instance number) 
+
+For extracted classes:
+Every object has a diffrent instance number, even if its the same object captured in diffrent image during capturing vehicle ride.
+
+For classes descriptions look for /home/radek/DeepLearning/SemanticKITTI/ExtractObjects/CLASSES_INFO_semantic-kitti.yaml
+
+number of objects:
+car  		10 -> 74268+133980=208 248
+person		30 -> 1253+6211=   7 464
+building	50 -> 		   347 533
+trunk		71 -> 		   105 636
+pole		80 -> 		   67 458
+
+
+DATASET BALANCING AND VALIDATION SPLIT
+For classes "30" and "50" clouds with less than 25 points were removed (i forgot to skip them while i was extracting them). For rest of the classes it was alredy done while extracting single instances.
+
+For class "50" first 139285 objects were removed (undersampling),after that 15 % was moved to validation
+For class "30" additional 422 objects were added from (datasts_3D/person/PCD + datasts_3D/person/PCD_test)
+
+In all cases validation = 15 % of training data
+
+Only class "30" is balanced by copy (from 3518 to 4*3518 = 14072)
+
+Each object in class with biggest numbers of objects ("50") has 5 projections so total number of images for this class (and all the other after balancing with variable number of pojections) is 177009*8=1416072
+
+Projection parameters:
+-Range image
+-For class with buggest number of objects -> 8 projections per object -> for the rest variable number of projections (so the total for each class is 1 416 072)
+-horizontal projections 
+TRAIN|VALIDATION
+		"50"			"71"					"10"		"30"		"80"
+final
+number		177009|			89791|					132309|		14052|		57334|
+of clouds	
+
+degree
+range		from 0 to 360 deg	0 to 360 (each object has 16 projections, 
+		(each 8 projections)	than some are removed to reach 1 416 072)
+projections
+per object 	8|			16|					11|	 	101|		25|
+
+-vertical - only one vertical angle = 0 deg
+
+Final nuber of images in each class may differ by couple images, because at the end i reomved some corrupted ones.
+
+

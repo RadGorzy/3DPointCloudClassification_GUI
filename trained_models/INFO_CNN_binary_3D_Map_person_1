@@ -1,0 +1,23 @@
+The total number of images in trainig dataset was 23580 per class. There were two sources
+of images : projections of 3D objects (3D) and adaptivly binarized photos from Mapillary Vistas [1] dataset (MV).
+
+To achive same numbers of projections for objects in each class, classes with less objects had more projections
+(the angle between projections taken around object was smaller).
+
+------------------------------------------------------------------------------------
+class                             |car |building/wall |tree | street light | person
+------------------------------------------------------------------------------------
+data source                       | 3D |  3D           | 3D  | 3D          | 3D + MV
+------------------------------------------------------------------------------------
+number of         |   3D obj.     | 655| 238           | 225 | 117         | 361
+uniqe objects     |-------------- |-------------------------------------------------
+(trainig dataset) |  photos before| 
+                  |  dataset      | -  |  -            |  -  |  -          | 17961 (MV) 
+                  |  balancing    |
+------------------------------------------------------------------------------------            
+
+[1] G. Neuhold, T. Ollmann, S. R. Bulò i P. Kontschieder, „The Mapillary Vistas Dataset for
+Semantic Understanding of Street Scenes,” w International Conf. on Computer Vision
+(ICCV) 2017 , sierpień 2017. 
+
+

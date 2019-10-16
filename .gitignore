@@ -8,3 +8,4 @@ releases/
 bin/
 benchmark/saved_clouds
 embedded_python/__pycache__
+trained_models/downloadFromReleaseTab

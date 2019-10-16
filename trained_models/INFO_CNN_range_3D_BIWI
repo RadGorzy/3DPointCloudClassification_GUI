@@ -1,0 +1,24 @@
+CNN_range_3D_BIWI
+The total number of images in trainig dataset was 23580 per class. There were two sources
+of images : projections of 3D objects (3D) and range images from  BIWI RGBD-ID [1] dataset.
+
+Projections of objects were in form of range images (not just binary images as in "CNN_binary_3D_Map_person_1 model").
+
+To achive same numbers of projections for objects in each class, classes with less objects had more projections
+(the angle between projections taken around object was smaller).
+
+------------------------------------------------------------------------------------
+class                             |car |building/wall  |tree | street light | person
+------------------------------------------------------------------------------------
+data source                       | 3D |  3D           | 3D  | 3D          | 3D + BIWI
+------------------------------------------------------------------------------------
+number of         |   3D obj.     | 655| 238           | 225 | 117         | 361
+uniqe objects     |-------------- |-------------------------------------------------
+(trainig dataset) |  range images | 
+                  |  from BIWI    | -  |  -            |  -  |  -          | 11790 (BIWI) 
+                  |  dataset      |
+------------------------------------------------------------------------------------            
+
+[1] M. Munaro, „BIWI RGBD-ID Dataset,” [Online]. Available:
+http://robotics.dei.unipd.it/reid/index.php/8-dataset/2-overview-biwi. [acces: 1 12 2018].
+
