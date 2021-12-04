@@ -1,14 +1,12 @@
 //
 // Created by radek on 20.03.19.
 //
-//->?DO PYTHON EMBEDDING
-//tu juz nie ma #define NO_IMPORT_ARRAY , bo tu (w tym pliku zrodlowym) inicjalizuje modul pythona (init_ar()) -> w kazdym pozostalym compilation unit (pliku .cpp z zalocznomymi naglowkami #include ...h) uzywajacego modulu pythona juz musze to dac
-//dodatkowo kazdy plik zrodlowy .cpp uzywajacy modulu pythona musi miec: #define PY_ARRAY_UNIQUE_SYMBOL pbcvt_ARRAY_API
-//Zastosowanie init_ar() i Py_Finalize() tylko raz (a nie odpowiednio przed i po klasyfikacji jazdego obiektum jak mamy tutaj) w pointCloud.h -> cloudScene->classify() nie daje zauwazalnego przyspieszenia dzialania programu.
+//we dont need #define NO_IMPORT_ARRAY ,because we initlize here python module (init_ar())
+//additionaly each .cpp file using python module must have:#define PY_ARRAY_UNIQUE_SYMBOL pbcvt_ARRAY_API
 //
 #define PY_ARRAY_UNIQUE_SYMBOL pbcvt_ARRAY_API
 #include "src/model/classification.h"
-//# UWAGA -dziala tylko gdy uruchamiamy program w virtual environment: <w konsoli>: source ~/venv/bin/activate && cd ~/Documents/Qt5/3DPointCloudClassification_GUI/build && ./3DPointCloudClassification_GUI
+//#virtual environment: source ~/venv/bin/activate  && ./3DPointCloudClassification_GUI
 // PyObject -> Vector
 std::vector<float> MultiViewClassification::listTupleToVector_Float(PyObject* incoming) {
     std::vector<float> data;
@@ -29,6 +27,44 @@ std::vector<float> MultiViewClassification::listTupleToVector_Float(PyObject* in
     }
     return data;
 }
+// Return the current Python error and backtrace as a string, or throw
+// an exception if there was none.
+std::string python_error_string() {
+  using namespace boost::python;
+
+  PyObject* ptype = nullptr;
+  PyObject* pvalue = nullptr;
+  PyObject* ptraceback = nullptr;
+
+  // Fetch the exception information. If there was no error ptype will be set
+  // to null. The other two values might set to null anyway.
+  PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+  if (ptype == nullptr) {
+      return "No error";
+//    throw std::runtime_error("A Python error was detected but when we called "
+//                             "PyErr_Fetch() it returned null indicating that "
+//                             "there was no error.");
+  }
+
+  // Sometimes pvalue is not an instance of ptype. This converts it. It's
+  // done lazily for performance reasons.
+  PyErr_NormalizeException(&ptype, &pvalue, &ptraceback);
+  if (ptraceback != nullptr) {
+    PyException_SetTraceback(pvalue, ptraceback);
+  }
+
+  // Get Boost handles to the Python objects so we get an easier API.
+  handle<> htype(ptype);
+  handle<> hvalue(allow_null(pvalue));
+  handle<> htraceback(allow_null(ptraceback));
+
+  // Import the `traceback` module and use it to format the exception.
+  object traceback = import("traceback");
+  object format_exception = traceback.attr("format_exception");
+  object formatted_list = format_exception(htype, hvalue, htraceback);
+  object formatted = str("\n").join(formatted_list);
+  return extract<std::string>(formatted);
+}
 /**
  * @brief MultiViewClassification::classifyAndGetNNResponeVector
  * @param projection_vector
@@ -43,7 +79,7 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
     std::string python_file="ModelTesting";
     std::string python_func="classify_multiple_projections_and_get_response_vector";//"testing";
 
-    PyObject *pName, *pModule, *pDict, *pFunc;
+    PyObject *pModule, *pDict, *pFunc;
     PyObject *pArgs, *pValue;
     PyObject *vecp, *modelDir, *nOfCla;
 
@@ -56,26 +92,26 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
     init_ar(); //initialization
     const wchar_t *argv[] = {L"python3", L"ModelTesting"};
     PySys_SetArgv (1, (wchar_t **)argv);
-    //dodanie do PYTHONPATH - zaradzenie problemowi no module names ... found (https://stackoverflow.com/questions/24492327/python-embedding-in-c-importerror-no-module-named-pyfunction)
+    //add to PYTHONPATH - solve "no module names ... found" problem (https://stackoverflow.com/questions/24492327/python-embedding-in-c-importerror-no-module-named-pyfunction)
     PyRun_SimpleString("import sys");
-    PyRun_SimpleString("sys.path.append(\".\")");//czyli wymagamy aby plik pythona byl w folderze w ktorym jest .exe cpp     //PyRun_SimpleString("sys.path.append(\"<some_path>\")");
+    PyRun_SimpleString("sys.path.append(\".\")");    //PyRun_SimpleString("sys.path.append(\"<some_path>\")");
     PyRun_SimpleString("sys.path.append(\"../embedded_python\")");// embedded modules must be one folder up from executon file
     //PyRun_SimpleString("sys.path.append(\'/home/radek/Projects/3DPointCloudClassification_GUI/embedded_python\')");
 
-    //# UWAGA-> moze podawac sciezke do embedded modules jako parametr ?
-    pName = PyUnicode_FromString(python_file.c_str());
+
     //Error checking of pName left out //
-    pModule = PyImport_Import(pName);
-    Py_DECREF(pName);
+    pModule = PyImport_ImportModule(python_file.c_str());
+    std::string errMsg=python_error_string();
+
     if (pModule != NULL) {
         pFunc = PyObject_GetAttrString(pModule, python_func.c_str());
         //pFunc is a new reference
         //cv::Mat photo_cmat;
         //photo_cmat = cv::imread(path,0);
         if (pFunc && PyCallable_Check(pFunc)) {
-            pArgs = PyTuple_New(3);                      //ilosc zmiennych (parametrow funkcji w pythonie) //elementy musza byc przekazywane do pythona w postaciu Tuple (nawet jak jest tylko jeden)
+            pArgs = PyTuple_New(3);                      //number of python func. arguments// arguments must be passed as Tuple
             ///1 argument - projections///
-            vecp = PyTuple_New(projection_vector.size()); //wektor bedacy parametrem w pythonie (f."classify_multiple_projections" w pythonie przyjmuje jedna zmienna bedaca wektorem )//tutaj przechowuje rzuty (projekcje) jednego obiektu -> rozmiar od 1 do ilosci rzutow
+            vecp = PyTuple_New(projection_vector.size()); //vector argument :we store here projections of single object: size = number of porjections
             for(int i=0; i<projection_vector.size();i++)
             {
                 pValue = pbcvt::fromMatToNDArray(projection_vector[i]); //pValue = pbcvt::fromMatToNDArray(single_projection);
@@ -83,14 +119,14 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
                 if (!pValue) {
                     Py_DECREF(pArgs);
                     Py_DECREF(pModule);
-                    Py_DECREF(vecp); //czy to tez trzeba ?
+                    Py_DECREF(vecp);
                     fprintf(stderr, "Cannot convert 1st argument\n");
                     return {-1};
                 }
 
-                PyTuple_SetItem(vecp, i, pValue); //przypisuje kolejne tablice na kolejne pozycje tuple o rozmiarze ilosci projekcji jednego obiektu
+                PyTuple_SetItem(vecp, i, pValue); //assing array to tuple
             }
-            PyTuple_SetItem(pArgs, 0, vecp);  //przekazanie pierwszego parameru (ktorym jest wektor vecp),
+            PyTuple_SetItem(pArgs, 0, vecp);  //pass first argument
             /////////////////
             ////2 argument - trained model directory///
             modelDir=PyUnicode_FromString(modelDirectory.c_str());
@@ -100,7 +136,7 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
                 fprintf(stderr, "Cannot convert 2nd argument\n");
                 return {-1};
             }
-            PyTuple_SetItem(pArgs,1,modelDir); //przekazanie drugiego parametru (nazwy modelu)
+            PyTuple_SetItem(pArgs,1,modelDir); //pass second argument
             /////////////////
             ////3 argument - number of classes (given in class mapping and on which the model was tranied///
             nOfCla = PyLong_FromLong(numOfClasses);
@@ -115,7 +151,7 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
 
             pValue = PyObject_CallObject(pFunc, pArgs);  //returned value form function is stored here
             Py_DECREF(pArgs);
-            Py_DECREF(vecp); //# nie wiem czy to jest potrzebne ?
+            Py_DECREF(vecp);
             if (pValue != NULL) {
                 printf("Result of call: %ld\n", PyLong_AsLong(pValue));
                 return listTupleToVector_Float(pValue);
