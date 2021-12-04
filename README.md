@@ -1,6 +1,6 @@
 ## 3D Point Cloud Classification Tool
 
-It's a tool used for classifying 3D point clouds and testing diffrent classification models, segmentation, projection parameters and so on. By means of this tool you can also get 2D projections (binray or range) from 3D objects, so yuo can prepare trainign data for your models. Models can be trained using my other repository : "CNN_binary".
+It's a tool used for classifying 3D point clouds and testing diffrent classification models, segmentation, projection parameters and so on. By means of this tool you can also get 2D projections (binray or range) from 3D objects, so yuo can prepare trainign data for your models. Models can be trained using my other repository : "ImageClassifier".
 I tested it with point clouds from KITTI Vision Benchmark Suite[1] and IQmulus & TerraMobilita[2] (better classification results, but longer calculations).  
 
 ### Supported functions:
