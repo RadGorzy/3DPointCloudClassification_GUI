@@ -24,7 +24,7 @@ class ExtractObjectsInstances;
 
 typedef std::shared_ptr<PointCloudController> cloudControllerSharedPtr;
 typedef QList<QTreeWidgetItem*> listOfTreeWidgetItemRawPtr;
-typedef std::shared_ptr<ClassificationType> classificationTypeSharedPtr;
+typedef std::shared_ptr<ClassificationType> clsificationTypeSharedPtr;
 typedef std::shared_ptr<SegmentationType> segmentationTypeSharedPtr;
 typedef std::shared_ptr<ProjectionType> projectionTypeSharedPtr;
 typedef std::shared_ptr<EditType> editTypeSharedPtr;
@@ -40,7 +40,7 @@ typedef std::shared_ptr<ExtractObjectsInstances> extractObjectsInstancesSharedPt
 //we have to Q_DECLARE_METATYPE(type)  before calling qRegisterMetaType<>() (https://doc.qt.io/qt-5/qmetatype.html#qRegisterMetaType-1)
 Q_DECLARE_METATYPE(cloudControllerSharedPtr);
 Q_DECLARE_METATYPE(listOfTreeWidgetItemRawPtr);
-Q_DECLARE_METATYPE(classificationTypeSharedPtr);
+Q_DECLARE_METATYPE(clsificationTypeSharedPtr);
 Q_DECLARE_METATYPE(segmentationTypeSharedPtr);
 Q_DECLARE_METATYPE(projectionTypeSharedPtr);
 Q_DECLARE_METATYPE(editTypeSharedPtr);

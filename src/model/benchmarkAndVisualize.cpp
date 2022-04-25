@@ -145,9 +145,6 @@ std::string BenchmarkType::mapClass(int i){
         return std::to_string(i);
     }
 }
-std::vector<pcl::PointXYZ> BenchmarkType::getBoundingBox(){
-    
-}
 void BenchmarkType::benchmark(const pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, const int c_id){
     this->class_id=c_id;
     calculateParameters(cloud);
@@ -228,10 +225,10 @@ void KITTIBenchmark::getMatrix(Eigen::MatrixXd &mat, std::string line)
 
     tokens.erase(tokens.begin());//pomijamy wyraz "P2:", Tr_velo_to_cam: itd
     //Fill the P matrix
-    for (int i=0; i<tokens.size();i++)
+    for (size_t i=0; i<tokens.size();i++)
     {
         //cout<<"w =    "<<floor(i/P.cols())<<"   k= "<<i%P.cols()<<endl;
-        mat(floor(i/mat.cols()),i%mat.cols())=stod(tokens[i]);
+        mat(static_cast<unsigned int>(floor(i/mat.cols())),static_cast<unsigned int>(i%mat.cols()))=stod(tokens[i]);
     }
 
 }

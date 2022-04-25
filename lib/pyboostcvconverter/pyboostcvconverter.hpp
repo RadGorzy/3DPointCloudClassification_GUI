@@ -18,7 +18,9 @@
 #include <opencv2/core/core.hpp>
 #include <boost/python.hpp>
 #include <cstdio>
-
+#include <boost/python/to_python_converter.hpp>
+#include <boost/python/def.hpp>
+#include <boost/python/module.hpp>
 namespace pbcvt{
 
 using namespace cv;

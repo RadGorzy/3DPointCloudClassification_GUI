@@ -125,7 +125,7 @@ bool Configuration::saveConfiguration(QString path){
             adapter= wrap(widget);
 
             data=adapter->getConfigurationData();
-            stream <<name<<" "<< data << endl;
+            stream <<name<<" "<< data << "\n";
         }
 
         file.close();
@@ -167,7 +167,7 @@ bool Configuration::loadConfiguration(QString path){
         //it takes more time but it assures that configurations are always compatible and can be always loaded (as long as there are widgets (with names form configuration) in application)
         while(!stream.atEnd()){
             data=stream.readLine();
-            singleLineWords=data.split(QRegExp(" "));
+            singleLineWords=data.split(QRegularExpression(" "));
             index=findWidgetWithName(singleLineWords.at(0));
             //if widget name form configuration file is found among widgets in application
             if(index!=-1){

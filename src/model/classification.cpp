@@ -182,7 +182,7 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
         //(see python traceback structure)
 
         //Get error message
-        char *pStrErrorMessage = PyUnicode_AsUTF8(PyObject_Str(pvalue));
+        const char *pStrErrorMessage = PyUnicode_AsUTF8(PyObject_Str(pvalue));
         fprintf(stderr,"Py error = %s\n",pStrErrorMessage);
         fprintf(stderr, "Failed to load \"%s\"\n", python_file.c_str());
         return {-1};

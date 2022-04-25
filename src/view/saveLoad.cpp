@@ -13,7 +13,7 @@ bool SaveLoad::saveTXT(QString path,const std::vector<std::string> saveVector){
     if (file.open(QIODevice::WriteOnly| QIODevice::Truncate)) {
         QTextStream stream(&file);
         for(auto &line:saveVector){
-            stream <<QString(line.c_str())<<endl;
+            stream <<QStringView(QString(line.c_str()))<<"\n";
         }
         file.close();
         qDebug()<<"TXT WITH CLOUD INFO SAVED";

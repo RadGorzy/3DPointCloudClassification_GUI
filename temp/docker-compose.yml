@@ -1,0 +1,8 @@
+version: "3"
+services:
+    app:
+        #image: pcl:0.1.0
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: 3DPointCloudClassification

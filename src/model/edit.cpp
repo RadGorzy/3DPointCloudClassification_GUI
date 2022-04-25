@@ -9,7 +9,7 @@ void ProjectionEdit::edit(std::vector<cv::Mat> &projections){
      cv::Mat kernel= cv::getStructuringElement(kernelShape,cv::Size(kernelWidth,kernelHeight)); //bez upsampling stosowalem 6,6  //po upsampling 3,3
      ///Canny( vecMat, vecMat, 100, 200);
      std::vector<int> compression_params;
-     compression_params.push_back(CV_IMWRITE_JPEG_QUALITY);
+     compression_params.push_back(cv::IMWRITE_JPEG_QUALITY);
      compression_params.push_back(100);
      //store image in memory buffer (no need to write to file)
      std::vector<uchar> buf;

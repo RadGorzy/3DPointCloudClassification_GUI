@@ -1,6 +1,6 @@
 #include "src/controller/threadController.h"
 /* stara wersja classify
-void Worker::classify(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,classificationTypeSharedPtr classificationType,stdString modelPath,integer numOfClasses){
+void Worker::classify(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,clsificationTypeSharedPtr classificationType,stdString modelPath,integer numOfClasses){
     QString result="CLASSIFICATION FINISHED";
     //qDebug()<<"CLASSIFICATION thread:  "<<thread()->currentThreadId();
     modelController->classify(selectedClouds,classificationType,modelPath,numOfClasses);
@@ -8,7 +8,7 @@ void Worker::classify(const cloudControllerSharedPtr modelController, listOfTree
 }
 */
 void Worker::classify(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds
-              ,classificationTypeSharedPtr classificationType,segmentationTypeSharedPtr segmentationType
+              ,clsificationTypeSharedPtr classificationType,segmentationTypeSharedPtr segmentationType
               ,projectionTypeSharedPtr projectionType, editTypeSharedPtr editType
                       ,stdString modelPath,integer numOfClasses){
     QString result="CLASSIFICATION FINISHED";
@@ -38,7 +38,7 @@ ThreadController::ThreadController()
     //we have to register custom type in order to use it in connect (https://doc.qt.io/qt-5/qmetatype.html#qRegisterMetaType-1)
     qRegisterMetaType<cloudControllerSharedPtr>();
     qRegisterMetaType<listOfTreeWidgetItemRawPtr>();
-    qRegisterMetaType<classificationTypeSharedPtr>();
+    qRegisterMetaType<clsificationTypeSharedPtr>("clsificationTypeSharedPtr");
     qRegisterMetaType<segmentationTypeSharedPtr>("segmentationTypeSharedPtr");
     qRegisterMetaType<projectionTypeSharedPtr>("projectionTypeSharedPtr");
     qRegisterMetaType<editTypeSharedPtr>("editTypeSharePtr");

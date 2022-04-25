@@ -72,9 +72,9 @@
                    <property name="geometry">
                     <rect>
                      <x>0</x>
-                     <y>-256</y>
-                     <width>289</width>
-                     <height>310</height>
+                     <y>0</y>
+                     <width>233</width>
+                     <height>259</height>
                     </rect>
                    </property>
                    <attribute name="label">
@@ -340,8 +340,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>285</width>
-                     <height>478</height>
+                     <width>233</width>
+                     <height>402</height>
                     </rect>
                    </property>
                    <attribute name="label">
@@ -625,8 +625,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>281</width>
-                     <height>108</height>
+                     <width>233</width>
+                     <height>95</height>
                     </rect>
                    </property>
                    <attribute name="label">
@@ -664,8 +664,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>281</width>
-                     <height>231</height>
+                     <width>233</width>
+                     <height>200</height>
                     </rect>
                    </property>
                    <attribute name="label">
@@ -946,8 +946,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>294</width>
-                    <height>268</height>
+                    <width>219</width>
+                    <height>225</height>
                    </rect>
                   </property>
                   <attribute name="label">
@@ -1075,8 +1075,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>310</width>
-                    <height>232</height>
+                    <width>231</width>
+                    <height>192</height>
                    </rect>
                   </property>
                   <attribute name="label">
@@ -1263,7 +1263,7 @@
      <x>0</x>
      <y>0</y>
      <width>1015</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1347,6 +1347,7 @@
    <class>QVTKWidget</class>
    <extends>QWidget</extends>
    <header>QVTKWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

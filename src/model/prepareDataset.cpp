@@ -108,7 +108,11 @@ void PrepareDatasetFrom3D::removeSurplusProjections(std::string PROJECTIONS_PATH
             //create folder for removed (moved) files
             if(!DirectoryExists((PROJECTIONS_PATH+"/removed").c_str()))
             {
+#if defined(WIN32)
+                const int dir_err = mkdir((PROJECTIONS_PATH+"/removed").c_str());
+#else
                 const int dir_err = mkdir((PROJECTIONS_PATH+"/removed").c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+#endif
                 if (-1 == dir_err)
                 {
                     printf("Error creating %s directory!n",(PROJECTIONS_PATH+"/removed").c_str());

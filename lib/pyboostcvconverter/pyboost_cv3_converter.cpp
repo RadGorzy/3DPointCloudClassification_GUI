@@ -93,11 +93,11 @@ public:
 	}
 
 	UMatData* allocate(int dims0, const int* sizes, int type, void* data,
-			size_t* step, int flags, UMatUsageFlags usageFlags) const {
+            size_t* step, cv::AccessFlag flags, cv::UMatUsageFlags usageFlags) const {
 		if (data != 0) {
 			CV_Error(Error::StsAssert, "The data should normally be NULL!");
 			// probably this is safe to do in such extreme case
-			return stdAllocator->allocate(dims0, sizes, type, data, step, flags,
+            return stdAllocator->allocate(dims0, sizes, type, data, step, flags,
 					usageFlags);
 		}
 		PyEnsureGIL gil;
@@ -128,8 +128,8 @@ public:
 		return allocate(o, dims0, sizes, type, step);
 	}
 
-	bool allocate(UMatData* u, int accessFlags,
-			UMatUsageFlags usageFlags) const {
+    bool allocate(UMatData* u,  cv::AccessFlag accessFlags,
+            cv::UMatUsageFlags usageFlags) const {
 		return stdAllocator->allocate(u, accessFlags, usageFlags);
 	}
 
@@ -296,7 +296,7 @@ PyObject* matToNDArrayBoostConverter::convert(Mat const& m) {
 }
 
 matFromNDArrayBoostConverter::matFromNDArrayBoostConverter() {
-	boost::python::converter::registry::push_back(convertible, construct,
+    boost::python::converter::registry::push_back(convertible, construct,
 			boost::python::type_id<Mat>());
 }
 

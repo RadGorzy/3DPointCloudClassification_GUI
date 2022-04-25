@@ -14,11 +14,11 @@ class Worker : public QObject
 
 public slots:
     // stara wersja classify
-    //void classify(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,classificationTypeSharedPtr classificationType,stdString modelPath,integer numOfClasses);
+    //void classify(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,clsificationTypeSharedPtr classificationType,stdString modelPath,integer numOfClasses);
     //# np. dodaj jeszcze analogicznie segmentation (bo to tez moze dlugo zajac)
     //added benchmark function (despite sole file saving being quickly), because it have to wait untill classification is finished, so to handle it correctly I put it in the same thread
     void classify(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds
-                  ,classificationTypeSharedPtr classificationType,segmentationTypeSharedPtr segmentationType
+                  ,clsificationTypeSharedPtr classificationType,segmentationTypeSharedPtr segmentationType
                   ,projectionTypeSharedPtr projectionType, editTypeSharedPtr editType
                   ,stdString modelPath,integer numOfClasses);
     void benchmark(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,benchmarkTypeSharedPtr benchmarkType, stdString folderPath);
@@ -40,9 +40,9 @@ public slots:
     void handleResults(const QString &result);
 signals:
     // stara wersja classify
-    //void classify(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,classificationTypeSharedPtr classificationType,stdString modelPath,integer numOfClasses);
+    //void classify(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,clsificationTypeSharedPtr classificationType,stdString modelPath,integer numOfClasses);
     void classify(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds
-                  ,classificationTypeSharedPtr classificationType,segmentationTypeSharedPtr segmentationType
+                  ,clsificationTypeSharedPtr classificationType,segmentationTypeSharedPtr segmentationType
                   ,projectionTypeSharedPtr projectionType, editTypeSharedPtr editType
                   ,stdString modelPath,integer numOfClasses);
     void benchmark(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,benchmarkTypeSharedPtr benchmarkType, stdString folderPath);

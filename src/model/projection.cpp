@@ -393,6 +393,7 @@ Eigen::Vector4f RangeImageProjection::calculatePose(pcl::PointCloud<pcl::PointXY
 
     Eigen::Vector4f camera_dir_vector;
     camera_dir_vector<<A,B,C,D;
+    return camera_dir_vector;
 }
 void RangeImageProjection::create(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud){
     bool visualize=false;

@@ -70,7 +70,6 @@ public:
     void setFilePath(std::string fPath);
     void setClassMapping(std::vector<std::string> classList); //classList - on i'th index should contain class name associated with i'th class_id (f.e. classList[4]='pedestrain' -> so 'pedestrian' class_id = 4)
     virtual std::string mapClass(int i); //default class mapping (f.e. cloud class_id = 0 = 'car')
-    std::vector<pcl::PointXYZ> getBoundingBox();
     virtual void benchmark(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int c_id);
 };
 class CustomBenchmark:public BenchmarkType{
