@@ -3,15 +3,10 @@ project(3DPointCloudClassification_GUI)
 message("CMAKE_MAKE_PROGRMA= ${CMAKE_MAKE_PROGRAM}")
 
 set(CMAKE_CXX_STANDARD 14)
-set(graphviz foo.dot)
-
 # find Qt5 and required components
 find_package(Qt5 COMPONENTS REQUIRED Core Gui Widgets OpenGL)
 # need this to include the auto generated ui_mainwindow.h
 # file from the qt5_wrap_ui call below.
-#if you didnt 'make install' vtk -> show path to your vtk build below, for ex.:
-#set(VTK_DIR "/home/user/VTK/VTK-8.2.0-qt5-build")
-
 
 find_package(PCL 1.9 REQUIRED)
 find_package( OpenCV REQUIRED )
@@ -34,7 +29,6 @@ list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-
 include_directories(${EIGEN_INCLUDE_DIRS})
 include_directories(${PCL_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
@@ -44,15 +38,12 @@ include_directories( ${Boost_INCLUDE_DIR})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
-include_directories("${PROJECT_SOURCE_DIR}/lib"
-                    "${PROJECT_SOURCE_DIR}/lib/pyboostcvconverter" )
+include_directories("${PROJECT_SOURCE_DIR}/lib")
                     
 add_subdirectory(lib)
 add_subdirectory(src)
 
-####TESTS#####
 enable_testing()
-
 add_subdirectory(tests)
 
 

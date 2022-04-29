@@ -88,7 +88,7 @@ bool MultiViewClassification::loadPythonModule(PyObject **module,const std::stri
     *module = PyImport_ImportModule(file.c_str());
     std::string errMsg=python_error_string();
 
-    return (module!=NULL);
+    return (*module!=NULL);
 }
 /**
  * @brief MultiViewClassification::classifyAndGetNNResponeVector

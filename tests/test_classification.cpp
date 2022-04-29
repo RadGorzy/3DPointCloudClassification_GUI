@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-//#include "model/classification.h"
+#include "model/classification.h"
 
 // Demonstrate some basic assertions.
 TEST(HelloTest, BasicAssertions) {
@@ -9,8 +9,8 @@ TEST(HelloTest, BasicAssertions) {
   EXPECT_EQ(7 * 6, 42);
 }
 
-// TEST(ClassificationTest,LoadPythonModule){
-//   MultiViewClassification classifier;
-//   PyObject *pModule;
-//   EXPECT_NE(classifier.loadPythonModule(&pModule,"ModelTesting","classify_multiple_projections_and_get_response_vector"),false);
-// }
+TEST(ClassificationTest,LoadPythonModule){
+  MultiViewClassification classifier;
+  PyObject *pModule;
+  EXPECT_EQ(classifier.loadPythonModule(&pModule,"ModelTesting","classify_multiple_projections_and_get_response_vector"),true);
+}
