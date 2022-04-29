@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 project(3DPointCloudClassification_GUI)
 message("CMAKE_MAKE_PROGRMA= ${CMAKE_MAKE_PROGRAM}")
 
 set(CMAKE_CXX_STANDARD 14)
+set(graphviz foo.dot)
 
 # find Qt5 and required components
 find_package(Qt5 COMPONENTS REQUIRED Core Gui Widgets OpenGL)
@@ -43,50 +44,18 @@ include_directories( ${Boost_INCLUDE_DIR})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
-file(GLOB project_sources
-    "${PROJECT_SOURCE_DIR}/src/model/*.cpp"
-    "${PROJECT_SOURCE_DIR}/src/controller/*.cpp"
-    "${PROJECT_SOURCE_DIR}/src/view/*.cpp"
-    "${PROJECT_SOURCE_DIR}/lib/pyboostcvconverter/*.cpp"
-    "${PROJECT_SOURCE_DIR}/lib/*.cpp"
-    )
-file(GLOB project_headers
-            "${PROJECT_SOURCE_DIR}/src/model/*.h"
-            "${PROJECT_SOURCE_DIR}/src/controller/*.h"
-            "${PROJECT_SOURCE_DIR}/src/view/*.h"
-            "${PROJECT_SOURCE_DIR}/lib/*.h"
-            "${PROJECT_SOURCE_DIR}/lib/pyboostcvconverter/*.h"
-            "${PROJECT_SOURCE_DIR}/lib/pyboostcvconverter/*.hpp"
-            )
-file(GLOB project_ui
-    "${PROJECT_SOURCE_DIR}/src/ui/*.ui"
-    )
+include_directories("${PROJECT_SOURCE_DIR}/lib"
+                    "${PROJECT_SOURCE_DIR}/lib/pyboostcvconverter" )
+                    
+add_subdirectory(lib)
+add_subdirectory(src)
 
-#equivalent of DEFINES += QT_NO_VERSION_TAGGING in .pro file -> https://forum.qt.io/topic/38865/solved-cmake-equivalent-of-qmake-defines/3
-#add_definitions(-DQT_NO_VERSION_TAGGING)
+####TESTS#####
+enable_testing()
 
-# wrap the ui file to a c++ header
-qt5_wrap_ui(ui_wrap ${project_ui})
-qt5_wrap_cpp(moc_sources ${project_headers})
-
-add_executable(target
-${project_sources} 
-${project_headers}
-${ui_wrap} 
-${moc_sources})
+add_subdirectory(tests)
 
 
-target_link_libraries(target
-	PUBLIC
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Widgets
-        ${VTK_LIBRARIES}
-        ${PCL_LIBRARIES}
-        ${OpenCV_LIBS}
-        ${PYTHON_LIBRARIES}
-        ${Boost_LIBRARIES}
-         ${OpenMP_CXX_LIBRARIES})
 
 
 

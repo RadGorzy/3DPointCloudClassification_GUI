@@ -1,7 +1,7 @@
 //
 // Created by radek on 15.03.19.
 //
-#include "src/model/projection.h"
+#include "model/projection.h"
 
 #include <pcl/common/common.h>//do getMinMax3D
 #include <pcl/ModelCoefficients.h>

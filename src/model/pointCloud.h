@@ -13,14 +13,14 @@
 #include <pcl/point_cloud.h>
 #include <opencv2/opencv.hpp>
 
-#include "src/model/projection.h"
-#include "src/model/cloudFactory.h"
-#include "src/model/segmentation.h"
-#include "src/model/classification.h"
-#include "src/model/benchmarkAndVisualize.h"
-#include "src/model/edit.h"
+#include "model/projection.h"
+#include "model/cloudFactory.h"
+#include "model/segmentation.h"
+#include "model/classification.h"
+#include "model/benchmarkAndVisualize.h"
+#include "model/edit.h"
 class PointCloudController;
-#include "src/controller/pointCloudController.h"
+#include "controller/pointCloudController.h"
 
 class CloudObjectFactory;
 class CloudSceneFacory;

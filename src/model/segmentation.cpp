@@ -1,7 +1,7 @@
 //
 // Created by radek on 16.03.19.
 //
-#include "src/model/segmentation.h"
+#include "model/segmentation.h"
 
 #include <pcl/search/organized.h>
 #include <pcl/search/kdtree.h>

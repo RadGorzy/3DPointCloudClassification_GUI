@@ -11,3 +11,4 @@ embedded_python/__pycache__
 trained_models/CNN_binary_3D_Map_person_1
 trained_models/CNN_range_3D_BIWI
 trained_models/CNN_range_SemanticKITTI
+temp/

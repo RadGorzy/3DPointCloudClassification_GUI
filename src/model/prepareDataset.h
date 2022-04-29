@@ -9,7 +9,7 @@
 class CloudObject;
 class CloudObjectFactory;
 class CloudSceneFactory;
-#include "src/model/pointCloud.h"
+#include "model/pointCloud.h"
 #include <boost/filesystem.hpp> //for recursive directory traversing
 //#include <omp.h>
 

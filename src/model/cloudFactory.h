@@ -4,7 +4,7 @@
 #ifndef INC_3DPOINTCLOUDCLASSIFICATION_CLOUDFACTORY_H
 #define INC_3DPOINTCLOUDCLASSIFICATION_CLOUDFACTORY_H
 class PointCloudController;
-#include "src/model/pointCloud.h"
+#include "model/pointCloud.h"
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 class CloudObject;

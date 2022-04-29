@@ -5,7 +5,7 @@
 #ifndef INC_3DPOINTCLOUDCLASSIFICATION_CLASSIFICATION_H
 #define INC_3DPOINTCLOUDCLASSIFICATION_CLASSIFICATION_H
 
-#include "lib/pyboostcvconverter/pyboostcvconverter.hpp"
+#include "pyboostcvconverter/pyboostcvconverter.hpp"
 
 //For python embedding:
 #if (PY_VERSION_HEX >= 0x03000000)
@@ -28,6 +28,7 @@ class MultiViewClassification:public ClassificationType{
 public:
    std::vector<float> listTupleToVector_Float(PyObject* incoming);
    std::vector<float> classifyAndGetNNResponeVector(const std::vector<cv::Mat>& projection_vector, const std::string modelDirectory, int numOfClasses);
+   bool loadPythonModule(PyObject **module,const std::string &file,const std::string &func);
 };
 
 #endif //INC_3DPOINTCLOUDCLASSIFICATION_CLASSIFICATION_H

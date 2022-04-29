@@ -1,7 +1,7 @@
 //
 // Created by radek on 14.03.19.
 //
-#include "src/model/pointCloud.h"
+#include "model/pointCloud.h"
 #include <pcl/io/pcd_io.h>
 #include <opencv2/opencv.hpp>
 

@@ -1,7 +1,7 @@
 //
 // Created by radek on 26.03.19.
 //
-#include "src/model/edit.h"
+#include "model/edit.h"
 
 ProjectionEdit::ProjectionEdit(cv::MorphShapes kerShape,uint kerWidth, uint kerHeigth):kernelShape(kerShape),kernelWidth(kerWidth),kernelHeight(kerHeigth){}
 void ProjectionEdit::edit(std::vector<cv::Mat> &projections){

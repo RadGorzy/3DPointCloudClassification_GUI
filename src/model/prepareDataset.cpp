@@ -1,8 +1,8 @@
 //
 // Created by radek on 26.03.19.
 //
-#include "src/model/prepareDataset.h"
-#include "lib/helperFunctions.h"
+#include "model/prepareDataset.h"
+#include "helperFunctions.h"
 #include <random>
 
 PrepareDataset::PrepareDataset(std::string inP, std::string outP): inPath(inP),outPath(outP){}

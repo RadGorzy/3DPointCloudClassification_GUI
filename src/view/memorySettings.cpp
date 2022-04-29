@@ -1,4 +1,4 @@
-#include "src/view/memorySettings.h"
+#include "view/memorySettings.h"
 #include "ui_memorySettings.h"
 
 MemorySettings::MemorySettings(QWidget *parent) :

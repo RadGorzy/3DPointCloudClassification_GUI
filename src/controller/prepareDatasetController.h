@@ -1,7 +1,7 @@
 #ifndef PREPAREDATASETCONTROLLER_H
 #define PREPAREDATASETCONTROLLER_H
 #include <QTreeWidget>
-#include <src/model/prepareDataset.h>
+#include <model/prepareDataset.h>
 class PrepareDatasetController
 {
 private:

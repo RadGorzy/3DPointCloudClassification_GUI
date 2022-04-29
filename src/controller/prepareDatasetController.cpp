@@ -1,4 +1,4 @@
-#include "src/controller/prepareDatasetController.h"
+#include "controller/prepareDatasetController.h"
 
 PrepareDatasetController::PrepareDatasetController(QTreeWidget* trWid):treeWidget(trWid)
 {

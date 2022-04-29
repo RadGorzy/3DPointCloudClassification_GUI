@@ -7,7 +7,7 @@
 #include <QFileDialog>
 //#include <pointCloud.h>
 class SaveConditions;
-#include "src/view/saveLoad.h"
+#include "view/saveLoad.h"
 class CloudComponent;
 namespace Ui {
 class SaveSettings;

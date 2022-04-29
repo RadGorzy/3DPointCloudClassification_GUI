@@ -1,8 +1,8 @@
 //
 // Created by radek on 16.03.19.
 //
-#include "src/model/cloudFactory.h"
-#include "lib/helperFunctions.h"
+#include "model/cloudFactory.h"
+#include "helperFunctions.h"
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 #include <pcl/io/pcd_io.h>

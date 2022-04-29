@@ -2,8 +2,8 @@
 #ifndef SAVELOAD_H
 #define SAVELOAD_H
 class CloudComponent;
-#include "src/model/pointCloud.h"
-#include "lib/helperFunctions.h"
+#include "model/pointCloud.h"
+#include "helperFunctions.h"
 #include <limits>
 #include <functional>//std::bind
 class SaveConditions;

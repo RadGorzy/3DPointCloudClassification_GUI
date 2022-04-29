@@ -1,8 +1,8 @@
 //
 // Created by radek on 21.03.19.
 //
-#include "src/model/benchmarkAndVisualize.h"
-#include "lib/helperFunctions.h"
+#include "model/benchmarkAndVisualize.h"
+#include "helperFunctions.h"
 bool PRINT_LABEL=false;
 
 BoundingBoxType::BoundingBoxType(BBType type):bbType(type){}

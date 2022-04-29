@@ -1,4 +1,4 @@
-#include "src/controller/threadController.h"
+#include "controller/threadController.h"
 /* stara wersja classify
 void Worker::classify(const cloudControllerSharedPtr modelController, listOfTreeWidgetItemRawPtr selectedClouds,clsificationTypeSharedPtr classificationType,stdString modelPath,integer numOfClasses){
     QString result="CLASSIFICATION FINISHED";

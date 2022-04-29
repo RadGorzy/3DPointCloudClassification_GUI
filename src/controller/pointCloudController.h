@@ -2,16 +2,16 @@
 #ifndef INC_3DPOINTCLOUDCLASSIFICATION_POINTCLOUDCONTROLLER_H
 #define INC_3DPOINTCLOUDCLASSIFICATION_POINTCLOUDCONTROLLER_H
 
-#include "src/model/cloudFactory.h"
+#include "model/cloudFactory.h"
 class MainWindow;
-#include "src/view/mainwindow.h"
+#include "view/mainwindow.h"
 
 class CloudComponent;
 class CloudScene;
 class CloudObject;
-#include "src/model/pointCloud.h"
+#include "model/pointCloud.h"
 class SaveLoad;
-#include "src/view/saveLoad.h"
+#include "view/saveLoad.h"
 #include <limits>
 
 class PointCloudController: public std::enable_shared_from_this<PointCloudController> //#//https://stackoverflow.com/questions/27894246/cast-this-to-stdshared-ptr

@@ -5,7 +5,7 @@
 //additionaly each .cpp file using python module must have:#define PY_ARRAY_UNIQUE_SYMBOL pbcvt_ARRAY_API
 //
 #define PY_ARRAY_UNIQUE_SYMBOL pbcvt_ARRAY_API
-#include "src/model/classification.h"
+#include "model/classification.h"
 //#virtual environment: source ~/venv/bin/activate  && ./3DPointCloudClassification_GUI
 // PyObject -> Vector
 std::vector<float> MultiViewClassification::listTupleToVector_Float(PyObject* incoming) {
@@ -65,6 +65,31 @@ std::string python_error_string() {
   object formatted = str("\n").join(formatted_list);
   return extract<std::string>(formatted);
 }
+bool MultiViewClassification::loadPythonModule(PyObject **module,const std::string &file,const std::string &func){
+    
+
+    if (file.empty() || func.empty() ) {
+        fprintf(stderr,"Usage: call pythonfile funcname [args]\n");
+        return false;
+    }
+    //const wchar_t *argv[] = {L"python3", L"ModelTesting"};
+    //PySys_SetArgv (1, (wchar_t **)argv);
+    init_ar(); //initialization
+    const wchar_t *argv[] = {L"python3", L"ModelTesting"};
+    PySys_SetArgv (1, (wchar_t **)argv);
+    //add to PYTHONPATH - solve "no module names ... found" problem (https://stackoverflow.com/questions/24492327/python-embedding-in-c-importerror-no-module-named-pyfunction)
+    PyRun_SimpleString("import sys");
+    PyRun_SimpleString("sys.path.append(\".\")");    //PyRun_SimpleString("sys.path.append(\"<some_path>\")");
+    PyRun_SimpleString("sys.path.append(\"../embedded_python\")");// embedded modules must be one folder up from executon file
+    //PyRun_SimpleString("sys.path.append(\'/home/radek/Projects/3DPointCloudClassification_GUI/embedded_python\')");
+
+
+    //Error checking of pName left out //
+    *module = PyImport_ImportModule(file.c_str());
+    std::string errMsg=python_error_string();
+
+    return (module!=NULL);
+}
 /**
  * @brief MultiViewClassification::classifyAndGetNNResponeVector
  * @param projection_vector
@@ -82,26 +107,7 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
     PyObject *pModule, *pDict, *pFunc;
     PyObject *pArgs, *pValue;
     PyObject *vecp, *modelDir, *nOfCla;
-
-    if (python_file.empty() || python_func.empty() ) {
-        fprintf(stderr,"Usage: call pythonfile funcname [args]\n");
-        return {-1};
-    }
-    //const wchar_t *argv[] = {L"python3", L"ModelTesting"};
-    //PySys_SetArgv (1, (wchar_t **)argv);
-    init_ar(); //initialization
-    const wchar_t *argv[] = {L"python3", L"ModelTesting"};
-    PySys_SetArgv (1, (wchar_t **)argv);
-    //add to PYTHONPATH - solve "no module names ... found" problem (https://stackoverflow.com/questions/24492327/python-embedding-in-c-importerror-no-module-named-pyfunction)
-    PyRun_SimpleString("import sys");
-    PyRun_SimpleString("sys.path.append(\".\")");    //PyRun_SimpleString("sys.path.append(\"<some_path>\")");
-    PyRun_SimpleString("sys.path.append(\"../embedded_python\")");// embedded modules must be one folder up from executon file
-    //PyRun_SimpleString("sys.path.append(\'/home/radek/Projects/3DPointCloudClassification_GUI/embedded_python\')");
-
-
-    //Error checking of pName left out //
-    pModule = PyImport_ImportModule(python_file.c_str());
-    std::string errMsg=python_error_string();
+    if(!loadPythonModule(&pModule,python_file,python_func)){return {-1};}
 
     if (pModule != NULL) {
         pFunc = PyObject_GetAttrString(pModule, python_func.c_str());
