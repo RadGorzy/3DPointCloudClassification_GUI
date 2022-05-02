@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/build/tests/test_classification",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd":  "${workspaceFolder}/build/tests/",//"${fileDirname}",
             "environment": [],
         },
         {
@@ -20,7 +20,7 @@
             "name": "Debug",
             "program": "${workspaceFolder}/build/src/target",
             "args": [],
-            "cwd": "${workspaceFolder}/build",
+            "cwd": "${workspaceFolder}/build/src", //must be path to executable directory (python files are copied there)
             "env": {
                 "DISPLAY": "192.168.56.1:0.0"
             }

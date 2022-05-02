@@ -130,6 +130,8 @@ RUN apt-get update \
  
 RUN apt-get -V install -y python-numpy
 
+#Install all python libraries listed in requirements.txt
+
 
 WORKDIR /app
 

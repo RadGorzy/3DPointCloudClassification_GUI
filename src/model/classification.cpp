@@ -75,19 +75,16 @@ bool MultiViewClassification::loadPythonModule(PyObject **module,const std::stri
     //const wchar_t *argv[] = {L"python3", L"ModelTesting"};
     //PySys_SetArgv (1, (wchar_t **)argv);
     init_ar(); //initialization
-    const wchar_t *argv[] = {L"python3", L"ModelTesting"};
-    PySys_SetArgv (1, (wchar_t **)argv);
-    //add to PYTHONPATH - solve "no module names ... found" problem (https://stackoverflow.com/questions/24492327/python-embedding-in-c-importerror-no-module-named-pyfunction)
-    PyRun_SimpleString("import sys");
-    PyRun_SimpleString("sys.path.append(\".\")");    //PyRun_SimpleString("sys.path.append(\"<some_path>\")");
-    PyRun_SimpleString("sys.path.append(\"../embedded_python\")");// embedded modules must be one folder up from executon file
-    //PyRun_SimpleString("sys.path.append(\'/home/radek/Projects/3DPointCloudClassification_GUI/embedded_python\')");
-
-
+    // PyRun_SimpleString("import sys");
+    // PyRun_SimpleString("sys.path.append(\".\")");
+    PyObject *sys = PyImport_ImportModule("sys");
+    PyObject *path = PyObject_GetAttrString(sys, "path");
+    PyList_Append(path, PyUnicode_FromString("."));
     //Error checking of pName left out //
     *module = PyImport_ImportModule(file.c_str());
     std::string errMsg=python_error_string();
-
+    
+    if(!*module){fprintf(stderr,"Python module loading err=%s\n",errMsg.c_str());}
     return (*module!=NULL);
 }
 /**
@@ -107,7 +104,10 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
     PyObject *pModule, *pDict, *pFunc;
     PyObject *pArgs, *pValue;
     PyObject *vecp, *modelDir, *nOfCla;
-    if(!loadPythonModule(&pModule,python_file,python_func)){return {-1};}
+    if(!loadPythonModule(&pModule,python_file,python_func)){
+            Py_Finalize();
+            return {-1};
+        }
 
     if (pModule != NULL) {
         pFunc = PyObject_GetAttrString(pModule, python_func.c_str());
@@ -127,6 +127,7 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
                     Py_DECREF(pModule);
                     Py_DECREF(vecp);
                     fprintf(stderr, "Cannot convert 1st argument\n");
+                    Py_Finalize();
                     return {-1};
                 }
 
@@ -140,6 +141,7 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
                 Py_DECREF(pArgs);
                 Py_DECREF(pModule);
                 fprintf(stderr, "Cannot convert 2nd argument\n");
+                Py_Finalize();
                 return {-1};
             }
             PyTuple_SetItem(pArgs,1,modelDir); //pass second argument
@@ -150,6 +152,7 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
                 Py_DECREF(pArgs);
                 Py_DECREF(pModule);
                 fprintf(stderr, "Cannot convert 3rd argument\n");
+                Py_Finalize();
                 return {-1};
             }
             PyTuple_SetItem(pArgs,2,nOfCla);
@@ -168,6 +171,7 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
                 Py_DECREF(pModule);
                 PyErr_Print();
                 fprintf(stderr,"Call failed\n");
+                Py_Finalize();
                 return {-1};
             }
         }
@@ -191,6 +195,7 @@ std::vector<float> MultiViewClassification::classifyAndGetNNResponeVector(const 
         const char *pStrErrorMessage = PyUnicode_AsUTF8(PyObject_Str(pvalue));
         fprintf(stderr,"Py error = %s\n",pStrErrorMessage);
         fprintf(stderr, "Failed to load \"%s\"\n", python_file.c_str());
+        Py_Finalize();
         return {-1};
     }
     Py_Finalize();

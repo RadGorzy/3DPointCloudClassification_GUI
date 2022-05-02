@@ -81,9 +81,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeWidget->insertTopLevelItem(1, item);
     item->addChild(child);
 */
-    QTreeWidgetItem * item = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("../example_scenes/IGN_Z0_car_1.pcd")));
-    QTreeWidgetItem * item1 = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("../example_scenes/0000000003.pcd")));
-    QTreeWidgetItem * item2 = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("../example_scenes/000023.bin")));
+    QTreeWidgetItem * item = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("IGN_Z0_car_1.pcd")));
+    QTreeWidgetItem * item1 = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("0000000003.pcd")));
+    QTreeWidgetItem * item2 = new QTreeWidgetItem ((QTreeWidget*)0, QStringList(QString("000023.bin")));
     item->setText(1,"object");
     item1->setText(1,"scene");
     item2->setText(1,"scene");
@@ -100,7 +100,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //config->addWidget(this->ui->scale1_doubleSpinBox);
     config->addAllWidgetsOfGivenTypes({SpinBox,DoubleSpinBox,CheckBox,ComboBox,LineEdit,GroupBox});
     //# ponizsza linijka tylko do TESTOW, potem do USUNIECIA
-    this->config->loadConfiguration("../configurations/CNN_range_SemanticKITTI_KITTI.txt");
+    this->config->loadConfiguration("CNN_range_SemanticKITTI_KITTI.txt");
 }
 
 MainWindow::~MainWindow()

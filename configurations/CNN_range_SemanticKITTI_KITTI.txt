@@ -50,7 +50,7 @@ benchmark_comboBox 1
 qt_spinbox_lineedit 
 prepareClsOfInterest_lineEdit 
 projectionSaveFolder_lineEdit 
-classificationModel_lineEdit /home/radek/Projects/ImageClassifier/data/models/CNN_binary_Map_person_edited_3x3
-benchmarkSaveFolder_lineEdit 
-selectClassMapping_lineEdit /home/radek/Projects/3DPointCloudClassification_GUI/benchmark/class_mapping.txt
+classificationModel_lineEdit ../trained_models/CNN_range_SemanticKITTI
+benchmarkSaveFolder_lineEdit ../benchmark
+selectClassMapping_lineEdit ../benchmark/class_mapping.txt
 editProjection_groupBox true

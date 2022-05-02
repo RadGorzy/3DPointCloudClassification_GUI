@@ -50,7 +50,7 @@ benchmark_comboBox 0
 qt_spinbox_lineedit 
 prepareClsOfInterest_lineEdit 
 projectionSaveFolder_lineEdit 
-classificationModel_lineEdit /home/radek/Documents/Qt5/3DPointCloudClassification_GUI/trained_models/CNN_range_SemanticKITTI
-benchmarkSaveFolder_lineEdit /home/radek/Documents/Qt5/3DPointCloudClassification_GUI/benchmark
-selectClassMapping_lineEdit /home/radek/Documents/Qt5/3DPointCloudClassification_GUI/trained_models/CNN_range_SemanticKITTI/class_mapping_CNN_range_SemanticKITTI.txt
+classificationModel_lineEdit ../trained_models/CNN_range_SemanticKITTI
+benchmarkSaveFolder_lineEdit ../benchmark
+selectClassMapping_lineEdit ../benchmark/class_mapping.txt
 editProjection_groupBox true
